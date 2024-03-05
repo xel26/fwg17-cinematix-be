@@ -22,5 +22,5 @@ func main() {
 		AllowMethods: []string{"GET", "POST", "PATCH", "DELETE"},
 	}))
 	r.NoRoute(noLink)
-	r.Run(":9090")
+	r.Run("127.0.0.1:9090")
 }
