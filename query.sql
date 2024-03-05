@@ -1,13 +1,13 @@
 CREATE table IF NOT EXISTS "role"(
 "id" serial PRIMARY KEY,
-"name" varchar (10),
+"name" varchar(20),
 "createdAt" timestamp default now(),
 "updatedAt" timestamp 
 );
 INSERT INTO "role" ("id", "name", "createdAt", "updatedAt")
 VALUES
-	(1, "customer", now(), NULL),
-	(2, "administrator", now(), NULL);
+	(1, 'customer', now(), NULL),
+	(2, 'administrator', now(), NULL);
 
 CREATE table IF NOT EXISTS "users"(
 "id" serial PRIMARY KEY,
@@ -26,16 +26,16 @@ FOREIGN KEY ("roleId") REFERENCES "role"(id),
 
 CREATE table IF NOT EXISTS "status"(
 "id" serial PRIMARY KEY,
-"name" varchar (10),
+"name" varchar (20),
 "createdAt" timestamp default now(),
 "updatedAt" timestamp 
 );
 
 INSERT INTO "status" ("id", "name", "createdAt", "updatedAt")
 VALUES
-	(1, "coming soon", now(), NULL),
-	(2, "now airing", now(), NULL),
-	(3, "expired", now(), NULL);
+	(1, 'coming soon', now(), NULL),
+	(2, 'now airing', now(), NULL),
+	(3, 'expired', now(), NULL);
 
 CREATE table IF NOT EXISTS "rating"(
 "id" serial PRIMARY KEY,
@@ -46,11 +46,11 @@ CREATE table IF NOT EXISTS "rating"(
 
 INSERT INTO "rating" ("id", "name", "createdAt", "updatedAt")
 VALUES
-	(1, "G", now(), NULL),
-	(2, "PG", now(), NULL),
-	(3, "PG-13", now(), NULL),
-	(4, "R", now(), NULL),
-	(5, "NC-17", now(), NULL);
+	(1, 'G', now(), NULL),
+	(2, 'PG', now(), NULL),
+	(3, 'PG-13', now(), NULL),
+	(4, 'R', now(), NULL),
+	(5, 'NC-17', now(), NULL);
 
 CREATE table IF NOT EXISTS "movies"(
 "id" serial PRIMARY KEY,
@@ -79,8 +79,8 @@ CREATE table IF NOT EXISTS "genre"(
 
 INSERT INTO "genre" ("id", "name", "createdAt", "updatedAt")
 VALUES
-	(1, "Action", now(), NULL),
-	(2, "Adventure", now(), NULL);
+	(1, 'Action', now(), NULL),
+	(2, 'Adventure', now(), NULL);
 
 CREATE table IF NOT EXISTS "genreMovies"(
 "id" serial PRIMARY KEY,
