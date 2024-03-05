@@ -1,4 +1,4 @@
-# fwg17-cinematix-be# Coffee Shop Go-Backend
+# fwg17-cinematix-be
 
 Welcome to the Coffee Shop Backend Web Project! This repository contains the back-end source code for the Online Coffee Shop web application. With Express.js and NodeJs structure.
 
