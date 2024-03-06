@@ -31,15 +31,32 @@ func ListAllMovies(c *gin.Context) {
 	}
 
 	if err != nil {
-		msg := "Internal Server Error"
+		msg := "No Data Match"
 		helpers.Utils(err, msg, c) // Error Handler
 		return
 	}
 
-	c.JSON(http.StatusOK, &services.ResponseAll{
+	c.JSON(http.StatusOK, &services.ResponseList{
 		Success:  true,
 		Message:  "List All Movies",
 		PageInfo: *pageInfo,
 		Results:  result.Data,
+	})
+}
+
+func DetailMovie(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	movie, err := models.FindOneMovies(id)
+	if err != nil {
+		msg := "Movie Not Found"
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	c.JSON(http.StatusOK, &services.Response{
+		Success: true,
+		Message: "Detail Movie",
+		Results: movie,
 	})
 }
