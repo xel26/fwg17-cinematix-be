@@ -10,6 +10,14 @@ import (
 
 // KHUSUS ERROR HANDLING
 func Utils(err error, ms string, c *gin.Context) {
+	if err == nil {
+        c.JSON(http.StatusNotFound, &services.ResponseBack{
+            Success: false,
+            Message: ms,
+        })
+        return
+    }
+	
 	if strings.HasPrefix(err.Error(), "sql: no rows") {
 		c.JSON(http.StatusNotFound, &services.ResponseBack{
 			Success: false,
