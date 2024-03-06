@@ -7,6 +7,6 @@ import (
 
 func profileRouter(rg *gin.RouterGroup) {
 	rg.GET("", customerController.ProfileUser)
-	// rg.PATCH("", customerController.UpdateUser)
+	rg.PATCH("", customerController.UpdateUser)
 }
 

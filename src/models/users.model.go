@@ -16,6 +16,28 @@ func FindUsersId(id int) (services.PersonNet, error){
 	return data, err
 }
 
+// UPDATE users
+func UpdateUsers(data services.Person) (services.PersonNet, error){ // bisa teruddate jika type untuk fullName di ganti jadi string.
+	sql := `
+	UPDATE "users" SET 
+	"firstName"=COALESCE(NULLIF(:firstName,''),"firstName"),
+	"lastName"=COALESCE(NULLIF(:lastName,''),"lastName"),
+	"phoneNumber"=COALESCE(NULLIF(:phoneNumber,''),"phoneNumber"),
+	"picture"=COALESCE(NULLIF(:picture,''),"picture"),
+	"password"=COALESCE(NULLIF(:password,''),"password"),
+	"updatedAt"=NOW()
+    WHERE id=:id
+    RETURNING *
+    `
+	returning := services.PersonNet{}
+	rows, err := lib.DbConnection().NamedQuery(sql, data)
+	
+	for rows.Next(){
+		rows.StructScan(&returning)
+	}
+	return returning, err
+}
+
 
 
 // ------------ AUTH ------------
