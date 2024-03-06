@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/LukaGiorgadze/gonull"
+	"github.com/lib/pq"
 )
 
 // ------------ UNIVERSAL ------------
@@ -11,6 +12,7 @@ import (
 type PageInfo struct {
 	CurrentPage int `json:"currentPage"`
 	TotalPage   int `json:"totalPage"`
+	Limit       int `json:"limit"`
 	NextPage    int `json:"nextPage"`
 	PrevPage    int `json:"prevPage"`
 	TotalData   int `json:"totalData"`
@@ -36,16 +38,16 @@ type ResponseBack struct {
 	Message string `json:"message"`
 }
 
-//Token
+// Token
 type TokenTemp struct {
 	Token string `json:"token"`
 }
 
-
-
-
-
-
+// Count
+type Info struct {
+	Data  interface{}
+	Count int
+}
 
 // ------------ USERS ------------
 // Untuk users model
@@ -76,7 +78,26 @@ type PersonNet struct { // untuk struck respon saja dimana data yg tidak di isi 
 
 // AUTH login & register
 type RLUsers struct {
-	Email    	string 	`db:"email" json:"email" form:"email" binding:"email" binding:"required"`
-	Role     	string 	`db:"role" json:"role"`
-	Password 	string 	`db:"password" json:"password" form:"password" binding:"required"`
+	Email    string `db:"email" json:"email" form:"email" binding:"email" binding:"required"`
+	Role     string `db:"role" json:"role"`
+	Password string `db:"password" json:"password" form:"password" binding:"required"`
+}
+
+// MOVIES
+
+type Movies struct {
+	Id           int             `db:"id" json:"id"`
+	StatusId     *int            `db:"statusId" json:"statusId" form:"statusId"`
+	RatingId     *int            `db:"ratingId" json:"ratingId" form:"ratingId"`
+	Title        *string         `db:"title" json:"title" form:"title"`
+	Image        *string         `db:"image" json:"image" form:"image"`
+	Genre        *pq.StringArray `db:"genre" json:"genre" form:"genre"`
+	Director     *string         `db:"director" json:"director" form:"director"`
+	Casts        *string         `db:"casts" json:"casts" form:"casts"`
+	Duration     *string         `db:"duration" json:"duration" form:"duration"`
+	ReleaseDate  *time.Time      `db:"releaseDate" json:"releaseDate" form:"releaseDate"`
+	Sinopsis     *string         `db:"sinopsis" json:"sinopsis" form:"sinopsis"`
+	IsRecomended *bool           `db:"isRecomended" json:"isRecomended" form:"isRecomended"`
+	CreatedAt    *time.Time      `db:"createdAt" json:"createdAt" form:"createdAt"`
+	UpdatedAt    *time.Time      `db:"updatedAt" json:"updatedAt" form:"updatedAt"`
 }

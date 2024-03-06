@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/putragabrielll/fwg17-cinematix-be/src/routers"
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
 )
 
@@ -21,6 +22,7 @@ func main() {
 		AllowOrigins: []string{"http://localhost:5173"},
 		AllowMethods: []string{"GET", "POST", "PATCH", "DELETE"},
 	}))
+	routers.Combine(r)
 	r.NoRoute(noLink)
 	r.Run("127.0.0.1:9090")
 }
