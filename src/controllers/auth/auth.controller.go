@@ -17,7 +17,7 @@ func Register(c *gin.Context) {
 	usersData := services.RLUsers{}
 	err := c.ShouldBind(&usersData) // untuk memasukkan data dari form ke struck Person{}
 	if err != nil {
-		msg := "Invalid Email!"
+		msg := "Invalid Email"
 		helpers.Utils(err, msg, c) // Error Handle
 		return
 	}
@@ -30,13 +30,13 @@ func Register(c *gin.Context) {
 	createUser, err := models.RegisterUsers(usersData)
 	fmt.Println(err)
 	if err != nil {
-		msg := "Email Already exists!"
+		msg := "Email Already exists"
 		helpers.Utils(err, msg, c) // Error Handler
 		return
 	}
 	c.JSON(http.StatusOK, &services.Response{
 		Success: true,
-		Message: "Create users successfully!",
+		Message: "Create users successfully",
 		Results: createUser,
 	})
 }

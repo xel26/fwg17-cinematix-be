@@ -1,8 +1,14 @@
-package customer
+package customerRouters
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/putragabrielll/fwg17-cinematix-be/src/middlewares"
+)
 
 
 func CustomerRouter(r *gin.RouterGroup){
-// End Point
+	authMiddleware, _ := middlewares.Auth()
+	r.Use(authMiddleware.MiddlewareFunc())
+
+	profileRouter(r.Group("/profile"))
 }

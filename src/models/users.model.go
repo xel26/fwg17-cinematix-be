@@ -8,6 +8,16 @@ import (
 
 var db *sqlx.DB = lib.DbConnection()
 
+// SELECT users BY id
+func FindUsersId(id int) (services.PersonNet, error){
+	sql := `SELECT * FROM "users" WHERE "id"=$1`
+	data := services.PersonNet{}
+	err := lib.DbConnection().Get(&data, sql, id) // id diambil dari parameter id.
+	return data, err
+}
+
+
+
 // ------------ AUTH ------------
 // LOGIN users BY email
 func FindUsersByEmail(email string) (services.PersonNet, error) {
