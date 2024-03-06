@@ -1,4 +1,4 @@
-package auth
+package authRouters
 
 import (
 	"github.com/gin-gonic/gin"

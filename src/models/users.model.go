@@ -8,6 +8,38 @@ import (
 
 var db *sqlx.DB = lib.DbConnection()
 
+// SELECT users BY id
+func FindUsersId(id int) (services.PersonNet, error){
+	sql := `SELECT * FROM "users" WHERE "id"=$1`
+	data := services.PersonNet{}
+	err := lib.DbConnection().Get(&data, sql, id) // id diambil dari parameter id.
+	return data, err
+}
+
+// UPDATE users
+func UpdateUsers(data services.Person) (services.PersonNet, error){ // bisa teruddate jika type untuk fullName di ganti jadi string.
+	sql := `
+	UPDATE "users" SET 
+	"firstName"=COALESCE(NULLIF(:firstName,''),"firstName"),
+	"lastName"=COALESCE(NULLIF(:lastName,''),"lastName"),
+	"phoneNumber"=COALESCE(NULLIF(:phoneNumber,''),"phoneNumber"),
+	"picture"=COALESCE(NULLIF(:picture,''),"picture"),
+	"password"=COALESCE(NULLIF(:password,''),"password"),
+	"updatedAt"=NOW()
+    WHERE id=:id
+    RETURNING *
+    `
+	returning := services.PersonNet{}
+	rows, err := lib.DbConnection().NamedQuery(sql, data)
+	
+	for rows.Next(){
+		rows.StructScan(&returning)
+	}
+	return returning, err
+}
+
+
+
 // ------------ AUTH ------------
 // LOGIN users BY email
 func FindUsersByEmail(email string) (services.PersonNet, error) {

@@ -1,4 +1,4 @@
-package customerRouter
+package customerRouters
 
 import (
 	"github.com/gin-gonic/gin"

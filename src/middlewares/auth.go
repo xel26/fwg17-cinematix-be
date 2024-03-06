@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"errors"
 	"net/http"
 	"os"
 	"strings"
@@ -11,8 +10,7 @@ import (
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-
-	// "github.com/putragabrielll/go-backend/src/models"
+	"github.com/pkg/errors"
 	"github.com/putragabrielll/fwg17-cinematix-be/src/models"
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
 )
@@ -22,7 +20,7 @@ func payload(data interface{}) jwt.MapClaims {
 	user := data.(*services.PersonNet)
 	return jwt.MapClaims{
 		"id":   user.Id,
-		"role": user.RoleId,
+		"roleId": user.RoleId,
 	}
 }
 
@@ -31,7 +29,7 @@ func identity(c *gin.Context) interface{} {
 	claims := jwt.ExtractClaims(c)
 	return &services.PersonNet{
 		Id:   int(claims["id"].(float64)),
-		RoleId: claims["roleId"].(int),
+		RoleId: int(claims["roleId"].(float64)),
 	}
 }
 
@@ -99,7 +97,7 @@ func loginresp(c *gin.Context, code int, token string, time time.Time) {
 func Auth() (*jwt.GinJWTMiddleware, error) {
 	godotenv.Load()
 	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
-		Realm:           "go-backend",
+		Realm:           "cinematix-be",
 		Key:             []byte(os.Getenv("APP_SECRET")),
 		IdentityKey:     "id",
 		PayloadFunc:     payload,

@@ -23,10 +23,10 @@ func Utils(err error, ms string, c *gin.Context) {
 		})
 		return
 	} else if ms == "Internal Server Error" {
-      c.JSON(http.StatusNotFound, &services.ResponseBack{
-          Success: false,
-          Message: ms,
-      })
-      return
+		c.JSON(http.StatusNotFound, &services.ResponseBack{
+			Success: false,
+			Message: ms,
+		})
+		return
     }
 }
