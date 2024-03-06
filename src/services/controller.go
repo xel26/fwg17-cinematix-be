@@ -51,28 +51,30 @@ type TokenTemp struct {
 // ------------ USERS ------------
 // Untuk users model
 type Person struct {
-	Id          int                        `db:"id" json:"id"`
-	FullName    string                     `db:"fullName" json:"fullName" form:"fullName"`
-	Email       string                     `db:"email" json:"email" form:"email" binding:"email" binding:"required"`
-	PhoneNumber string                     `db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
-	Address     string                     `db:"address" json:"address" form:"address"`
-	Picture     string                     `db:"picture" json:"picture"`
-	Role        string                     `db:"role" json:"role"`
-	Password    string                     `db:"password" json:"password" form:"password" binding:"required"`
-	CreatedAt   time.Time                  `db:"createdAt" json:"createdAt"`
-	UpdatedAt   gonull.Nullable[time.Time] `db:"updatedAt" json:"updatedAt"`
+	Id          int                        	`db:"id" json:"id"`
+	RoleId    	int    						`db:"roleId" json:"roleId"`
+	Email       string                     	`db:"email" json:"email" form:"email"`
+	FirstName   string     					`db:"firstName" json:"firstName" form:"firstName"`
+	LastNamee   string     					`db:"lastName" json:"lastName" form:"lastName"`
+	PhoneNumber string    					`db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
+	Picture     string    					`db:"picture" json:"picture" form:"picture"`
+	Point       string                     	`db:"point" json:"point"`
+	Password    string                     	`db:"password" json:"password" form:"password"`
+	CreatedAt   time.Time                  	`db:"createdAt" json:"createdAt"`
+	UpdatedAt   gonull.Nullable[time.Time] 	`db:"updatedAt" json:"updatedAt"`
 }
 type PersonNet struct { // untuk struck respon saja dimana data yg tidak di isi diperbolehkan nil/nul
-	Id          int                        `db:"id" json:"id"`
-	FullName    gonull.Nullable[string]    `db:"fullName" json:"fullName" form:"fullName"`
-	Email       string                     `db:"email" json:"email" form:"email"`
-	PhoneNumber gonull.Nullable[string]    `db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
-	Address     gonull.Nullable[string]    `db:"address" json:"address" form:"address"`
-	Picture     gonull.Nullable[string]    `db:"picture" json:"picture" form:"picture"`
-	Role        string                     `db:"role" json:"role"`
-	Password    string                     `db:"password" json:"password" form:"password"`
-	CreatedAt   time.Time                  `db:"createdAt" json:"createdAt"`
-	UpdatedAt   gonull.Nullable[time.Time] `db:"updatedAt" json:"updatedAt"`
+	Id          int                        	`db:"id" json:"id"`
+	RoleId    	int    						`db:"roleId" json:"roleId"`
+	Email       string                     	`db:"email" json:"email" form:"email"`
+	FirstName   gonull.Nullable[string]     `db:"firstName" json:"firstName" form:"firstName"`
+	LastNamee   gonull.Nullable[string]     `db:"lastName" json:"lastName" form:"lastName"`
+	PhoneNumber gonull.Nullable[string]    	`db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
+	Picture     gonull.Nullable[string]    	`db:"picture" json:"picture" form:"picture"`
+	Point       gonull.Nullable[int]        `db:"point" json:"point"`
+	Password    string                     	`db:"password" json:"password" form:"password"`
+	CreatedAt   time.Time                  	`db:"createdAt" json:"createdAt"`
+	UpdatedAt   gonull.Nullable[time.Time] 	`db:"updatedAt" json:"updatedAt"`
 }
 
 // AUTH login & register

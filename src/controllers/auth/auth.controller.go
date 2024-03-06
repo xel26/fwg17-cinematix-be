@@ -1,8 +1,8 @@
 package auth
 
 import (
-	// "fmt"
 	// "math/rand"
+	"fmt"
 	"net/http"
 	// "strings"
 
@@ -13,10 +13,7 @@ import (
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
 )
 
-
-
-
-func Register(c *gin.Context){
+func Register(c *gin.Context) {
 	usersData := services.RLUsers{}
 	err := c.ShouldBind(&usersData) // untuk memasukkan data dari form ke struck Person{}
 	if err != nil {
@@ -30,20 +27,19 @@ func Register(c *gin.Context){
 
 	usersData.Password = hasedPasswd.String()
 
-
 	createUser, err := models.RegisterUsers(usersData)
-	if err != nil  {
+	fmt.Println(err)
+	if err != nil {
 		msg := "Email Already exists!"
 		helpers.Utils(err, msg, c) // Error Handler
 		return
 	}
-	c.JSON(http.StatusOK, &services.ResponseList{
+	c.JSON(http.StatusOK, &services.Response{
 		Success: true,
 		Message: "Create users successfully!",
 		Results: createUser,
 	})
 }
-
 
 // func ForgotPassword(c *gin.Context){
 // 	userReset := services.FormReset{}
@@ -58,7 +54,7 @@ func Register(c *gin.Context){
 // 		if finduser.Id != 0 {
 // 			getOTP := rand.Perm(9)
 // 			userReset.Otp = strings.Trim(strings.Replace(fmt.Sprint(getOTP[0:6]), " ", "", -1), "[]") // make otp
-// 			models.CreateRP(userReset) 
+// 			models.CreateRP(userReset)
 // 			// START SEND OTP TO EMAIL
 // 				fmt.Println(userReset) // get otp
 // 			// END SEND EMAIL
@@ -68,7 +64,7 @@ func Register(c *gin.Context){
 // 			})
 // 			return
 // 		}
-// 	} 
+// 	}
 // 	if userReset.Otp != "" {
 // 		findEmail, _ := models.FindRPByOTP(userReset.Otp) // pengecekan apakah OTP nya valid
 // 		if findEmail.Id != 0 {
@@ -111,6 +107,6 @@ func Register(c *gin.Context){
 // 			Success: false,
 // 			Message: "Internal Server Error",
 // 		})
-// 		return 
+// 		return
 // 	}
 // }
