@@ -95,6 +95,7 @@ FOREIGN KEY ("moviesId") REFERENCES "movies"(id),
 CREATE table IF NOT EXISTS "cinema"(
 "id" serial PRIMARY KEY,
 "name" varchar (15),
+"grade" varchar (15),
 "image" text,
 "price" int,
 "createdAt" timestamp default now(),
