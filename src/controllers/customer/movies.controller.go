@@ -36,7 +36,7 @@ func ListAllMovies(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, &services.ResponseAll{
+	c.JSON(http.StatusOK, &services.ResponseList{
 		Success:  true,
 		Message:  "List All Movies",
 		PageInfo: *pageInfo,

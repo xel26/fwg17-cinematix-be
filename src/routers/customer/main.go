@@ -11,5 +11,5 @@ func CustomerRouter(r *gin.RouterGroup){
 	r.Use(authMiddleware.MiddlewareFunc())
 
 	profileRouter(r.Group("/profile"))
-  MovieRouter(r.Group("/movies"))
+	MovieRouter(r.Group("/movies"))
 }

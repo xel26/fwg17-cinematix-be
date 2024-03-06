@@ -3,6 +3,7 @@ module github.com/putragabrielll/fwg17-cinematix-be
 go 1.21.3
 
 require (
+	github.com/KEINOS/go-argonize v1.1.1
 	github.com/LukaGiorgadze/gonull v1.2.0
 	github.com/appleboy/gin-jwt/v2 v2.9.2
 	github.com/gin-contrib/cors v1.5.0
@@ -10,6 +11,7 @@ require (
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.10.9
+	github.com/pkg/errors v0.9.1
 )
 
 require (
