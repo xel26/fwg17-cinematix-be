@@ -7,7 +7,7 @@ import (
 
 func MovieRouter(r *gin.RouterGroup) {
 	r.GET("", customerControllers.ListAllMovies)
-	// r.GET("/:id", customer_controllers.DetailUser)
+	r.GET("/:id", customerControllers.DetailMovie)
 	// r.POST("", customer_controllers.CreateUser)
 	// r.PATCH("/:id", customer_controllers.UpdateUser)
 	// r.DELETE("/:id", customer_controllers.DeleteUser)
