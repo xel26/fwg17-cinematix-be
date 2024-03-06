@@ -18,9 +18,9 @@ func FindUsersByEmail(email string) (services.PersonNet, error){
 func RegisterUsers(data services.RLUsers) (services.PersonNet, error){
 	sql := `
 	INSERT INTO "users"
-    ("email", "role", "password")
+    ("email", "password")
     VALUES
-    (:email, :role, :password)
+    (:email, :password)
     RETURNING *
     `
 	returning := services.PersonNet{}

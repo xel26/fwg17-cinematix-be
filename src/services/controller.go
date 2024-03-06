@@ -7,7 +7,7 @@ import (
 )
 
 // ------------ UNIVERSAL ------------
-// Page Info
+// PAGE INFO
 type PageInfo struct {
 	CurrentPage int `json:"currentPage"`
 	TotalPage   int `json:"totalPage"`
@@ -16,15 +16,16 @@ type PageInfo struct {
 	TotalData   int `json:"totalData"`
 }
 
-// Response ALL DATA
-type ResponseAll struct {
+// RESPONSE ALL DATA
+type ResponseList struct {
 	Success  bool        `json:"success"`
 	Message  string      `json:"message"`
 	PageInfo PageInfo    `json:"pageInfo"`
 	Results  interface{} `json:"results"`
 }
 
-type ResponseList struct {
+// RESPONSE SELECT DATA by ID
+type Response struct {
 	Success bool        `json:"success"`
 	Message string      `json:"message"`
 	Results interface{} `json:"results"`
@@ -36,7 +37,7 @@ type ResponseBack struct {
 	Message string `json:"message"`
 }
 
-//Token
+//TOKEN
 type TokenTemp struct {
 	Token string `json:"token"`
 }
@@ -77,6 +78,5 @@ type PersonNet struct { // untuk struck respon saja dimana data yg tidak di isi 
 // AUTH login & register
 type RLUsers struct {
 	Email    	string 	`db:"email" json:"email" form:"email" binding:"email" binding:"required"`
-	Role     	string 	`db:"role" json:"role"`
 	Password 	string 	`db:"password" json:"password" form:"password" binding:"required"`
 }
