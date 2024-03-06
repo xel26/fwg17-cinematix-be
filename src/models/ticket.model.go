@@ -1,11 +1,10 @@
 package models
 
 import (
-	"encoding/base64"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/putragabrielll/fwg17-cinematix-be/src/helpers"
+	"github.com/lib/pq"
 )
 
 type ticket struct{
@@ -15,7 +14,7 @@ type ticket struct{
 	Time time.Time `db:"time" json:"time"`
 	SeatCount int `db:"seatCount" json:"seatCount"`
 	Total int `db:"total" json:"total"`
-	SeatCode string `db:"seatCode" json:"seatCode"`
+	SeatCode pq.StringArray `db:"seatCode" json:"seatCode"`
 }
 
 
@@ -44,19 +43,8 @@ func GetTicket(c *gin.Context, orderId int, userId int) (ticket, error) {
 	GROUP BY "m"."title", "r"."name", "d"."date", "at"."time", "o"."seatCount", "o"."total"
 	`
 	data := ticket{}
-	encoded := base64.StdEncoding.EncodeToString([]byte(data.SeatCode))
-	decodeSeatcode, err := base64.StdEncoding.DecodeString(encoded)
+	err := db.Get(&data, sql, orderId, userId)
 	if err != nil {
-		msg := "decodeSeatcode error"
-		helpers.Utils(err, msg, c)
-		return data, err
-	}
-
-	data.SeatCode = string(decodeSeatcode)
-	err = db.Get(&data, sql, orderId, userId)
-	if err != nil {
-		msg := err.Error()
-		helpers.Utils(err, msg, c)
 		return data, err
 	}
 	
