@@ -56,22 +56,22 @@ type Info struct {
 type Person struct {
 	Id          int                        	`db:"id" json:"id"`
 	RoleId    	int    						`db:"roleId" json:"roleId"`
-	Email       string                     	`db:"email" json:"email" form:"email"`
-	FirstName   string     					`db:"firstName" json:"firstName" form:"firstName"`
-	LastNamee   string     					`db:"lastName" json:"lastName" form:"lastName"`
-	PhoneNumber string    					`db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
-	Picture     string    					`db:"picture" json:"picture" form:"picture"`
-	Point       string                     	`db:"point" json:"point"`
+	Email       string     					`db:"email" json:"email"`
+	FirstName   *string     				`db:"firstName" json:"firstName" form:"firstName"`
+	LastName   	*string     				`db:"lastName" json:"lastName" form:"lastName"`
+	PhoneNumber *string    					`db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
+	Picture     *string    					`db:"picture" json:"picture" form:"picture"`
+	Point       *int     					`db:"point" json:"point"`
 	Password    string                     	`db:"password" json:"password" form:"password"`
-	CreatedAt   time.Time                  	`db:"createdAt" json:"createdAt"`
-	UpdatedAt   gonull.Nullable[time.Time] 	`db:"updatedAt" json:"updatedAt"`
+	CreatedAt   *time.Time                  `db:"createdAt" json:"createdAt"`
+	UpdatedAt   *time.Time 					`db:"updatedAt" json:"updatedAt"`
 }
 type PersonNet struct { // untuk struck respon saja dimana data yg tidak di isi diperbolehkan nil/nul
 	Id          int                        	`db:"id" json:"id"`
 	RoleId    	int    						`db:"roleId" json:"roleId"`
 	Email       string                     	`db:"email" json:"email" form:"email"`
 	FirstName   gonull.Nullable[string]     `db:"firstName" json:"firstName" form:"firstName"`
-	LastNamee   gonull.Nullable[string]     `db:"lastName" json:"lastName" form:"lastName"`
+	LastName   	gonull.Nullable[string]     `db:"lastName" json:"lastName" form:"lastName"`
 	PhoneNumber gonull.Nullable[string]    	`db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
 	Picture     gonull.Nullable[string]    	`db:"picture" json:"picture" form:"picture"`
 	Point       gonull.Nullable[int]        `db:"point" json:"point"`

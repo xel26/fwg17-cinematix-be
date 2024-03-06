@@ -58,7 +58,7 @@ CREATE table IF NOT EXISTS "movies"(
 FOREIGN KEY ("statusId") REFERENCES "status"(id),
 "ratingId" int NOT NULL,
 FOREIGN KEY ("ratingId") REFERENCES "rating"(id),
-"tittle" varchar (255),
+"title" varchar (255),
 "image" text,
 "director" varchar (255),
 "casts" text,
@@ -182,6 +182,8 @@ FOREIGN KEY ("usersId") REFERENCES "users"(id),
 FOREIGN KEY ("cinemaLocationId") REFERENCES "cinemaLocation"(id),
 "paymentId" int NOT NULL,
 FOREIGN KEY ("paymentId") REFERENCES "paymentMethod"(id),
+"movieTimeId" int NOT NULL,
+FOREIGN KEY ("movieTimeId") REFERENCES "moviesTime"(id),
 "seatCount" int NOT NULL,
 "isPaid" bool DEFAULT false,
 "isUsed" bool DEFAULT false,
@@ -198,3 +200,9 @@ FOREIGN KEY ("orderId") REFERENCES "order"(id),
 "createdAt" timestamp default now(),
 "updatedAt" timestamp 
 );
+
+
+-- add kolom baru dateId
+ALTER TABLE "order" ADD COLUMN "movieTimeId" int NOT NULL ;
+-- add untuk Foreign key
+ALTER TABLE "order" ADD CONSTRAINT ofk FOREIGN KEY ("movieTimeId") REFERENCES "moviesTime" ("id");
