@@ -39,8 +39,7 @@ type ResponseBack struct {
 	Message string `json:"message"`
 }
 
-
-//TOKEN
+// TOKEN
 type TokenTemp struct {
 	Token string `json:"token"`
 }
@@ -54,21 +53,21 @@ type Info struct {
 // ------------ USERS ------------
 // Untuk users model
 type Person struct {
-	Id          int                        	`db:"id" json:"id"`
+	Id          int               `db:"id" json:"id"`
 	RoleId    	int    						`db:"roleId" json:"roleId"`
-	Email       string     					`db:"email" json:"email"`
-	FirstName   *string     				`db:"firstName" json:"firstName" form:"firstName"`
-	LastName   	*string     				`db:"lastName" json:"lastName" form:"lastName"`
-	PhoneNumber *string    					`db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
-	Picture     *string    					`db:"picture" json:"picture" form:"picture"`
+	Email       string     				`db:"email" json:"email"`
+	FirstName   *string     			`db:"firstName" json:"firstName" form:"firstName"`
+	LastName   	*string     			`db:"lastName" json:"lastName" form:"lastName"`
+	PhoneNumber *string    				`db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
+	Picture     *string    				`db:"picture" json:"picture" form:"picture"`
 	Point       *int     					`db:"point" json:"point"`
-	Password    string                     	`db:"password" json:"password" form:"password"`
-	CreatedAt   *time.Time                  `db:"createdAt" json:"createdAt"`
-	UpdatedAt   *time.Time 					`db:"updatedAt" json:"updatedAt"`
+	Password    string            `db:"password" json:"password" form:"password"`
+	CreatedAt   *time.Time        `db:"createdAt" json:"createdAt"`
+	UpdatedAt   *time.Time 				`db:"updatedAt" json:"updatedAt"`
 }
 type PersonNet struct { // untuk struck respon saja dimana data yg tidak di isi diperbolehkan nil/nul
 	Id          int                        	`db:"id" json:"id"`
-	RoleId    	int    						`db:"roleId" json:"roleId"`
+	RoleId    	int    						          `db:"roleId" json:"roleId"`
 	Email       string                     	`db:"email" json:"email" form:"email"`
 	FirstName   gonull.Nullable[string]     `db:"firstName" json:"firstName" form:"firstName"`
 	LastName   	gonull.Nullable[string]     `db:"lastName" json:"lastName" form:"lastName"`
@@ -90,8 +89,8 @@ type RLUsers struct {
 
 type Movies struct {
 	Id           int             `db:"id" json:"id"`
-	StatusId     *int            `db:"statusId" json:"statusId" form:"statusId"`
-	RatingId     *int            `db:"ratingId" json:"ratingId" form:"ratingId"`
+	Status       *string         `db:"status" json:"status" form:"status"`
+	Rating       *string         `db:"rating" json:"rating" form:"rating"`
 	Title        *string         `db:"title" json:"title" form:"title"`
 	Image        *string         `db:"image" json:"image" form:"image"`
 	Genre        *pq.StringArray `db:"genre" json:"genre" form:"genre"`
