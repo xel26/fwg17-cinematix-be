@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+
 // KHUSUS ERROR HANDLING
 func Utils(err error, ms string, c *gin.Context) {
 	if strings.HasPrefix(err.Error(), "sql: no rows") {
@@ -15,11 +16,17 @@ func Utils(err error, ms string, c *gin.Context) {
 			Message: ms,
 		})
 		return
-	} else if strings.HasSuffix(err.Error(), `unique constraint "users_email_key"`) { // Hendler Email Already exists!
+	}  else if strings.HasSuffix(err.Error(), `unique constraint "users_email_key"`) { // Hendler Email Already exists!
 		c.JSON(http.StatusBadRequest, &services.ResponseBack{
 			Success: false,
 			Message: ms,
 		})
 		return
-	}
+	} else if ms == "Internal Server Error" {
+      c.JSON(http.StatusNotFound, &services.ResponseBack{
+          Success: false,
+          Message: ms,
+      })
+      return
+    }
 }
