@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -16,9 +17,7 @@ func Utils(err error, ms string, c *gin.Context) {
             Message: ms,
         })
         return
-    }
-	
-	if strings.HasPrefix(err.Error(), "sql: no rows") {
+    } else if strings.HasPrefix(err.Error(), "sql: no rows") {
 		c.JSON(http.StatusNotFound, &services.ResponseBack{
 			Success: false,
 			Message: ms,
