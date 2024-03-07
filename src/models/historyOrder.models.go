@@ -10,6 +10,7 @@ import (
 
 
 type HistoryOrder struct {
+	Id int `db:"id" json:"id"`
 	IsUsed bool `db:"isUsed" json:"isUsed"`
 	IsPaid bool `db:"isPaid" json:"isPaid"`
 	Total int `db:"total" json:"total"`
@@ -27,6 +28,7 @@ type HistoryOrder struct {
 func GetHistoryOrder(c *gin.Context, userId int) ([]HistoryOrder, error) {
 	sql := `
 	SELECT
+	"o"."id",
 	"o"."isUsed",
 	"o"."isPaid",
 	"o"."total",
@@ -42,14 +44,14 @@ func GetHistoryOrder(c *gin.Context, userId int) ([]HistoryOrder, error) {
 	JOIN "orderDetail" "od" ON ("od"."orderId" = "o"."id")
 	JOIN "movies" "m" ON ("m"."id" = "o"."moviesId")
 	JOIN "rating" "r" ON ("r"."id" = "m"."ratingId")
-	JOIN "movieCinema" "mc" ON ("mc"."moviesId" = "m"."id")
-	JOIN "cinema" "c" ON ("c"."id" = "mc"."cinemaId")
+	JOIN "cinemaLocation" "cl" ON ("cl"."id" = "o"."cinemaLocationId")
+	JOIN "cinema" "c" ON ("c"."id" = "cl"."cinemaId")
 	JOIN "moviesTime" "mt" ON ("mt"."id" = "o"."movieTimeId")
 	JOIN "airingTimeDate" "atd" ON ("atd"."id" = "mt"."airingTimeDateId")
 	JOIN "airingTime" "at" ON ("at"."id" = "atd"."airingTimeId")
 	JOIN "date" "d" ON ("d"."id" = "atd"."dateId")
 	WHERE "o"."usersId" = $1
-	GROUP BY "o"."isUsed", "o"."isPaid", "o"."total", "o"."createdAt", "o"."seatCount", "m"."title", "c"."image", "at"."time", "d"."date", "r"."name"
+	GROUP BY "o"."id", "o"."isUsed", "o"."isPaid", "o"."total", "o"."createdAt", "o"."seatCount", "m"."title", "c"."image", "at"."time", "d"."date", "r"."name"
 	ORDER BY "o"."createdAt" DESC
 	`
 

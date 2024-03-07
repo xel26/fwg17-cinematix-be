@@ -21,6 +21,12 @@ func GetHistoryOrder(c *gin.Context) {
 		return
 	}
 
+	if len(result) == 0 {
+		msg := "data history order not found"
+		helpers.Utils(err, msg, c)
+		return
+	}
+
 	
 	c.JSON(http.StatusOK, &services.Response{
 		Success: true,
