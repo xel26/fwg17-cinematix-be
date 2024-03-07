@@ -1,9 +1,7 @@
 package models
 
 import (
-	"fmt"
 	"time"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,6 +26,6 @@ func GetPaymentInfo(c *gin.Context, orderId int) (paymentInfo, error) {
 	err := db.Get(&data, sql, orderId)
 
 	data.CreatedAt = data.CreatedAt.Add(24 * time.Hour)
-	fmt.Println(data.CreatedAt)
+	// fmt.Println(data.CreatedAt)
 	return data, err
 }
