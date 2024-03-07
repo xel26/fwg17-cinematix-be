@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -10,6 +11,7 @@ import (
 
 // KHUSUS ERROR HANDLING
 func Utils(err error, ms string, c *gin.Context) {
+	fmt.Println(err.Error())
 	if strings.HasPrefix(err.Error(), "sql: no rows") {
 		c.JSON(http.StatusNotFound, &services.ResponseBack{
 			Success: false,
