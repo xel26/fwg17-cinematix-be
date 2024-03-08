@@ -3,9 +3,7 @@ package models
 import (
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"
-	"github.com/putragabrielll/fwg17-cinematix-be/src/helpers"
 )
 
 
@@ -22,10 +20,11 @@ type HistoryOrder struct {
 	Date time.Time `db:"date" json:"date"`
 	Rating string `db:"rating" json:"rating"`
 	SeatCode pq.StringArray `db:"seatCode" json:"seatCode"`
+	AccountNumber string `db:"accountNumber" json:"accountNumber"`
 }
 
 
-func GetHistoryOrder(c *gin.Context, userId int) ([]HistoryOrder, error) {
+func GetHistoryOrder(userId int) ([]HistoryOrder, error) {
 	sql := `
 	SELECT
 	"o"."id",
@@ -39,27 +38,27 @@ func GetHistoryOrder(c *gin.Context, userId int) ([]HistoryOrder, error) {
 	"at"."time",
 	"d"."date",
 	"r"."name" AS "rating",
+	"pm"."accountNumber",
 	array_agg(DISTINCT "od"."seatCode") "seatCode"
 	FROM "order" "o"
 	JOIN "orderDetail" "od" ON ("od"."orderId" = "o"."id")
-	JOIN "movies" "m" ON ("m"."id" = "o"."moviesId")
-	JOIN "rating" "r" ON ("r"."id" = "m"."ratingId")
-	JOIN "cinemaLocation" "cl" ON ("cl"."id" = "o"."cinemaLocationId")
-	JOIN "cinema" "c" ON ("c"."id" = "cl"."cinemaId")
 	JOIN "moviesTime" "mt" ON ("mt"."id" = "o"."movieTimeId")
+	JOIN "movieCinema" "mc" ON ("mc"."id" = "mt"."movieCinemaId")
+	JOIN "movies" "m" ON ("m"."id" = "mc"."moviesId")
+	JOIN "rating" "r" ON ("r"."id" = "m"."ratingId")
+	JOIN "cinema" "c" ON ("c"."id" = "mc"."cinemaId")
 	JOIN "airingTimeDate" "atd" ON ("atd"."id" = "mt"."airingTimeDateId")
 	JOIN "airingTime" "at" ON ("at"."id" = "atd"."airingTimeId")
 	JOIN "date" "d" ON ("d"."id" = "atd"."dateId")
+	JOIN "paymentMethod" "pm" ON ("pm"."id" = "o"."paymentId")
 	WHERE "o"."usersId" = $1
-	GROUP BY "o"."id", "o"."isUsed", "o"."isPaid", "o"."total", "o"."createdAt", "o"."seatCount", "m"."title", "c"."image", "at"."time", "d"."date", "r"."name"
+	GROUP BY "o"."id", "o"."isUsed", "o"."isPaid", "o"."total", "o"."createdAt", "o"."seatCount", "m"."title", "c"."image", "at"."time", "d"."date", "r"."name", "pm"."accountNumber"
 	ORDER BY "o"."createdAt" DESC
 	`
 
 	result := []HistoryOrder{}
 	err := db.Select(&result, sql, userId)
 	if err != nil {
-		msg := err.Error()
-		helpers.Utils(err, msg, c)
 		return result, err
 	}
 
