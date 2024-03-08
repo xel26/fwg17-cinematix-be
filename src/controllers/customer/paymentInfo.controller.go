@@ -18,7 +18,7 @@ func GetPaymentInfo(c *gin.Context) {
 		return
 	}
 
-	result, err := models.GetPaymentInfo(c, orderId)
+	result, err := models.GetPaymentInfo(orderId)
 	if err != nil{
 		msg := "payment info not found"
 		helpers.Utils(err, msg, c)
