@@ -16,5 +16,4 @@ func CustomerRouter(r *gin.RouterGroup) {
 	TicketRouter(r.Group("/ticket"))
 	ReservedSeatRouter(r.Group("/reserved-seat"))
 	// CreateOrderRouter(r.Group("/create-order"))
-	MovieCinemaIdRouter(r.Group("/movie-cinema"))
 }

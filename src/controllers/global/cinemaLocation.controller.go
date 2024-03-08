@@ -1,4 +1,4 @@
-package global
+package globalControllers
 
 import (
 	"net/http"

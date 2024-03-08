@@ -1,4 +1,4 @@
-package customerControllers
+package globalControllers
 
 import (
 	"fmt"
