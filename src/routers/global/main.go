@@ -5,6 +5,6 @@ import "github.com/gin-gonic/gin"
 
 func GlobalRouter(r *gin.RouterGroup){
 	MovieRouter(r.Group("/movies"))
-	// sizeRouters(r.Group("/product-size"))
+	CinemaLocation(r.Group("/cinema-location"))
 	// variantRouters(r.Group("/product-variant"))
 }
