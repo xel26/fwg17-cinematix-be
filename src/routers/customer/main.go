@@ -16,4 +16,5 @@ func CustomerRouter(r *gin.RouterGroup){
 	PaymentInfoRouter(r.Group("/payment-info"))
 	TicketRouter(r.Group("/ticket"))
 	ReservedSeatRouter(r.Group("/reserved-seat"))
+	MovieTimeRouter(r.Group("/movie-time"))
 }

@@ -1,18 +1,14 @@
 package models
 
-import (
-	"time"
-	"github.com/gin-gonic/gin"
-)
+import "time"
 
-type paymentInfo struct{
-	AccountNumber string `db:"accountNumber" json:"noRekeningVirtual"`
-	Total int `db:"total" json:"totalPayment"`
-	CreatedAt time.Time `db:"createdAt" json:"expiredDate"`
+type paymentInfo struct {
+	AccountNumber string    `db:"accountNumber" json:"noRekeningVirtual"`
+	Total         int       `db:"total" json:"totalPayment"`
+	CreatedAt     time.Time `db:"createdAt" json:"expiredDate"`
 }
 
-
-func GetPaymentInfo(c *gin.Context, orderId int) (paymentInfo, error) {
+func GetPaymentInfo(orderId int) (paymentInfo, error) {
 	sql := `
 	SELECT
 	"o"."total",
@@ -26,6 +22,5 @@ func GetPaymentInfo(c *gin.Context, orderId int) (paymentInfo, error) {
 	err := db.Get(&data, sql, orderId)
 
 	data.CreatedAt = data.CreatedAt.Add(24 * time.Hour)
-	// fmt.Println(data.CreatedAt)
 	return data, err
 }
