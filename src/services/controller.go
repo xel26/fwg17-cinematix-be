@@ -112,6 +112,7 @@ type MovieCinema struct {
 	CinemaId      *pq.Int64Array  `db:"cinemaId" json:"cinemaId" form:"cinemaId"`
 	MovieCinemaId *pq.Int64Array  `db:"movieCinemaId" json:"movieCinemaId" form:"movieCinemaId"`
 	CinemaImage   *pq.StringArray `db:"cinemaImage" json:"cinemaImage" form:"cinemaImage"`
+}
 
 // CINEMA LOCATION
 type CinemaLocation struct {

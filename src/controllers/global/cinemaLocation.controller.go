@@ -15,7 +15,7 @@ func CinemaLocation(c *gin.Context) {
 	cinemaid, _ := strconv.Atoi(c.Param("cinemaid"))
 	location, err := models.CinemaLocationId(cinemaid)
 	if err != nil {
-		msg := "No Data Match "
+		msg := "No Data Match"
 		helpers.Utils(err, msg, c) // Error Handler
 		return
 	}
