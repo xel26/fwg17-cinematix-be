@@ -53,30 +53,30 @@ type Info struct {
 // ------------ USERS ------------
 // Untuk users model
 type Person struct {
-	Id          int               `db:"id" json:"id"`
-	RoleId    	int    						`db:"roleId" json:"roleId"`
-	Email       string     				`db:"email" json:"email"`
-	FirstName   *string     			`db:"firstName" json:"firstName" form:"firstName"`
-	LastName   	*string     			`db:"lastName" json:"lastName" form:"lastName"`
-	PhoneNumber *string    				`db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
-	Picture     *string    				`db:"picture" json:"picture" form:"picture"`
-	Point       *int     					`db:"point" json:"point"`
-	Password    string            `db:"password" json:"password" form:"password"`
-	CreatedAt   *time.Time        `db:"createdAt" json:"createdAt"`
-	UpdatedAt   *time.Time 				`db:"updatedAt" json:"updatedAt"`
+	Id          int        `db:"id" json:"id"`
+	RoleId      int        `db:"roleId" json:"roleId"`
+	Email       string     `db:"email" json:"email"`
+	FirstName   *string    `db:"firstName" json:"firstName" form:"firstName"`
+	LastName    *string    `db:"lastName" json:"lastName" form:"lastName"`
+	PhoneNumber *string    `db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
+	Picture     *string    `db:"picture" json:"picture" form:"picture"`
+	Point       *int       `db:"point" json:"point"`
+	Password    string     `db:"password" json:"password" form:"password"`
+	CreatedAt   *time.Time `db:"createdAt" json:"createdAt"`
+	UpdatedAt   *time.Time `db:"updatedAt" json:"updatedAt"`
 }
 type PersonNet struct { // untuk struck respon saja dimana data yg tidak di isi diperbolehkan nil/nul
-	Id          int                        	`db:"id" json:"id"`
-	RoleId    	int    						          `db:"roleId" json:"roleId"`
-	Email       string                     	`db:"email" json:"email" form:"email"`
-	FirstName   gonull.Nullable[string]     `db:"firstName" json:"firstName" form:"firstName"`
-	LastName   	gonull.Nullable[string]     `db:"lastName" json:"lastName" form:"lastName"`
-	PhoneNumber gonull.Nullable[string]    	`db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
-	Picture     gonull.Nullable[string]    	`db:"picture" json:"picture" form:"picture"`
-	Point       gonull.Nullable[int]        `db:"point" json:"point"`
-	Password    string                     	`db:"password" json:"password" form:"password"`
-	CreatedAt   time.Time                  	`db:"createdAt" json:"createdAt"`
-	UpdatedAt   gonull.Nullable[time.Time] 	`db:"updatedAt" json:"updatedAt"`
+	Id          int                        `db:"id" json:"id"`
+	RoleId      int                        `db:"roleId" json:"roleId"`
+	Email       string                     `db:"email" json:"email" form:"email"`
+	FirstName   gonull.Nullable[string]    `db:"firstName" json:"firstName" form:"firstName"`
+	LastName    gonull.Nullable[string]    `db:"lastName" json:"lastName" form:"lastName"`
+	PhoneNumber gonull.Nullable[string]    `db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
+	Picture     gonull.Nullable[string]    `db:"picture" json:"picture" form:"picture"`
+	Point       gonull.Nullable[int]       `db:"point" json:"point"`
+	Password    string                     `db:"password" json:"password" form:"password"`
+	CreatedAt   time.Time                  `db:"createdAt" json:"createdAt"`
+	UpdatedAt   gonull.Nullable[time.Time] `db:"updatedAt" json:"updatedAt"`
 }
 
 // AUTH login & register
@@ -102,4 +102,13 @@ type Movies struct {
 	IsRecomended *bool           `db:"isRecomended" json:"isRecomended" form:"isRecomended"`
 	CreatedAt    *time.Time      `db:"createdAt" json:"createdAt" form:"createdAt"`
 	UpdatedAt    *time.Time      `db:"updatedAt" json:"updatedAt" form:"updatedAt"`
+}
+
+// MOVIE CINEMA
+
+type MovieCinema struct {
+	MovieId       int             `db:"movieId" json:"movieId"`
+	CinemaId      *pq.Int64Array  `db:"cinemaId" json:"cinemaId" form:"cinemaId"`
+	MovieCinemaId *pq.Int64Array  `db:"movieCinemaId" json:"movieCinemaId" form:"movieCinemaId"`
+	CinemaImage   *pq.StringArray `db:"cinemaImage" json:"cinemaImage" form:"cinemaImage"`
 }
