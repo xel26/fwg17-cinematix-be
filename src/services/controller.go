@@ -53,17 +53,17 @@ type Info struct {
 // ------------ USERS ------------
 // Untuk users model
 type Person struct {
-	Id          int               `db:"id" json:"id"`
-	RoleId    	int    						`db:"roleId" json:"roleId"`
-	Email       string     				`db:"email" json:"email"`
-	FirstName   *string     			`db:"firstName" json:"firstName" form:"firstName"`
-	LastName   	*string     			`db:"lastName" json:"lastName" form:"lastName"`
-	PhoneNumber *string    				`db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
-	Picture     *string    				`db:"picture" json:"picture" form:"picture"`
-	Point       *int     					`db:"point" json:"point"`
-	Password    string            `db:"password" json:"password" form:"password"`
-	CreatedAt   *time.Time        `db:"createdAt" json:"createdAt"`
-	UpdatedAt   *time.Time 				`db:"updatedAt" json:"updatedAt"`
+	Id          int             `db:"id" json:"id"`
+	RoleId    	int    			`db:"roleId" json:"roleId"`
+	Email       string     		`db:"email" json:"email"`
+	FirstName   *string     	`db:"firstName" json:"firstName" form:"firstName"`
+	LastName   	*string     	`db:"lastName" json:"lastName" form:"lastName"`
+	PhoneNumber *string    		`db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
+	Picture     *string    		`db:"picture" json:"picture"`
+	Point       *int     		`db:"point" json:"point"`
+	Password    string          `db:"password" json:"password" form:"password"`
+	CreatedAt   *time.Time      `db:"createdAt" json:"createdAt"`
+	UpdatedAt   *time.Time 		`db:"updatedAt" json:"updatedAt"`
 }
 type PersonNet struct { // untuk struck respon saja dimana data yg tidak di isi diperbolehkan nil/nul
 	Id          int                        	`db:"id" json:"id"`
