@@ -99,6 +99,7 @@ func Auth() (*jwt.GinJWTMiddleware, error) {
 	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
 		Realm:           "cinematix-be",
 		Key:             []byte(os.Getenv("APP_SECRET")),
+		Timeout:         30 * 24 * time.Hour,
 		IdentityKey:     "id",
 		PayloadFunc:     payload,
 		IdentityHandler: identity,

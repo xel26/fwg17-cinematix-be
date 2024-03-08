@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	authRouters "github.com/putragabrielll/fwg17-cinematix-be/src/routers/auth"
 	customerRouters "github.com/putragabrielll/fwg17-cinematix-be/src/routers/customer"
+	globalRouters "github.com/putragabrielll/fwg17-cinematix-be/src/routers/global"
 )
 
 func Combine(r *gin.Engine){
@@ -15,4 +16,7 @@ func Combine(r *gin.Engine){
 
 	//------------ ADMIN ------------
 	// adminRouters.AdminRouter(r.Group("/admin"))
+
+	//------------ GLOBAL ------------
+	globalRouters.GlobalRouter(r.Group(""))
 }
