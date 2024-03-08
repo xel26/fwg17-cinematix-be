@@ -3,7 +3,6 @@ package models
 import (
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"
 )
 
@@ -19,7 +18,7 @@ type ticket struct{
 
 
 
-func GetTicket(c *gin.Context, orderId int, userId int) (ticket, error) {
+func GetTicket(orderId int, userId int) (ticket, error) {
 	sql := `
 	SELECT
 	"m"."title",
@@ -31,12 +30,11 @@ func GetTicket(c *gin.Context, orderId int, userId int) (ticket, error) {
 	array_agg(DISTINCT "od"."seatCode") "seatCode"
 	FROM "order" "o"
 	JOIN "orderDetail" "od" ON ("od"."orderId" = "o"."id")
-	JOIN "movies" "m" ON ("m"."id" = "o"."moviesId")
-	JOIN "rating" "r" ON ("r"."id" = "m"."ratingId")
-	JOIN "movieCinema" "mc" ON ("mc"."moviesId" = "m"."id")
-	JOIN "cinema" "c" ON ("c"."id" = "mc"."cinemaId")
-	JOIN "moviesTime" "mt" ON ("mt"."cinemaId" = "c"."id")
+	JOIN "moviesTime" "mt" ON ("mt"."id" = "o"."movieTimeId")
+	JOIN "movieCinema" "mc" ON ("mc"."id" = "mt"."movieCinemaId")
 	JOIN "airingTimeDate" "atd" ON ("atd"."id" = "mt"."airingTimeDateId")
+	JOIN "movies" "m" ON ("m"."id" = "mc"."cinemaId")
+	JOIN "rating" "r" ON ("r"."id" = "m"."ratingId")
 	JOIN "airingTime" "at" ON ("at"."id" = "atd"."airingTimeId")
 	JOIN "date" "d" ON ("d"."id" = "atd"."dateId")
 	WHERE "o"."id" = $1 AND "o"."usersId" = $2
