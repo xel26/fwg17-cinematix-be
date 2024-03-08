@@ -7,25 +7,25 @@ import (
 func FindAllMovies(search string, filter string, orderBy string, limit int, offset int) (services.Info, error) {
 	sql := `
 	SELECT
-	"m"."id" "id",
-	"s"."name" "status",
-	"r"."name" "rating",
-	"m"."title" "title",
-	"m"."image" "image",
-	array_agg(DISTINCT "g"."name") "genre",
-	"m"."director" "director",
-	"m"."casts" "casts",
-	"m"."duration" "duration",
-	"m"."releaseDate" "releaseDate",
-	"m"."sinopsis" "sinopsis",
-	"m"."isRecomended" "isRecomended",
-	"m"."createdAt" "createdAt",
-	"m"."updatedAt" "updatedAt"
-	FROM "movies" "m"
-	LEFT JOIN "status" "s" ON "s"."id"="m"."statusId"
-	LEFT JOIN "rating" "r" ON "r"."id"="m"."ratingId"
-	LEFT JOIN "genreMovies" "gm" ON "gm"."moviesId" = "m"."id"
-	LEFT JOIN "genre" "g" ON "g"."id" = "gm"."genreId"
+	"m"."id" AS "id",
+	"s"."name" AS "status",
+	"r"."name" AS "rating",
+	"m"."title" AS "title",
+	"m"."image" AS "image",
+	array_agg(DISTINCT "g"."name") AS "genre",
+	"m"."director" AS "director",
+	"m"."casts" AS "casts",
+	"m"."duration" AS "duration",
+	"m"."releaseDate" AS "releaseDate",
+	"m"."sinopsis" AS "sinopsis",
+	"m"."isRecomended" AS "isRecomended",
+	"m"."createdAt" AS "createdAt",
+	"m"."updatedAt" AS "updatedAt"
+	FROM "movies" AS "m"
+	LEFT JOIN "status" AS "s" ON "s"."id"="m"."statusId"
+	LEFT JOIN "rating" AS "r" ON "r"."id"="m"."ratingId"
+	LEFT JOIN "genreMovies" AS "gm" ON "gm"."moviesId" = "m"."id"
+	LEFT JOIN "genre" AS "g" ON "g"."id" = "gm"."genreId"
 	WHERE "m"."title" ILIKE '%` + search + `%' AND "g"."name" ILIKE '%` + filter + `%'
 	GROUP BY "m"."id", "s"."name", "r"."name"
 	ORDER BY "` + orderBy + `" ASC
@@ -34,28 +34,28 @@ func FindAllMovies(search string, filter string, orderBy string, limit int, offs
 	`
 	sqlCount := `SELECT COUNT(*) 
 	FROM (SELECT
-		"m"."id" "id",
-		"s"."name" "status",
-		"r"."name" "rating",
-		"m"."title" "title",
-		"m"."image" "image",
-		array_agg(DISTINCT "g"."name") "genre",
-		"m"."director" "director",
-		"m"."casts" "casts",
-		"m"."duration" "duration",
-		"m"."releaseDate" "releaseDate",
-		"m"."sinopsis" "sinopsis",
-		"m"."isRecomended" "isRecomended",
-		"m"."createdAt" "createdAt",
-		"m"."updatedAt" "updatedAt"
-		FROM "movies" "m"
-		LEFT JOIN "status" "s" ON "s"."id"="m"."statusId"
-		LEFT JOIN "rating" "r" ON "r"."id"="m"."ratingId"
-		LEFT JOIN "genreMovies" "gm" ON "gm"."moviesId" = "m"."id"
-		LEFT JOIN "genre" "g" ON "g"."id" = "gm"."genreId"
+		"m"."id" AS "id",
+		"s"."name" AS "status",
+		"r"."name" AS "rating",
+		"m"."title" AS "title",
+		"m"."image" AS "image",
+		array_agg(DISTINCT "g"."name") AS "genre",
+		"m"."director" AS "director",
+		"m"."casts" AS "casts",
+		"m"."duration" AS "duration",
+		"m"."releaseDate" AS "releaseDate",
+		"m"."sinopsis" AS "sinopsis",
+		"m"."isRecomended" AS "isRecomended",
+		"m"."createdAt" AS "createdAt",
+		"m"."updatedAt" AS "updatedAt"
+		FROM "movies" AS "m"
+		LEFT JOIN "status" AS "s" ON "s"."id"="m"."statusId"
+		LEFT JOIN "rating" AS "r" ON "r"."id"="m"."ratingId"
+		LEFT JOIN "genreMovies" AS "gm" ON "gm"."moviesId" = "m"."id"
+		LEFT JOIN "genre" AS "g" ON "g"."id" = "gm"."genreId"
 		WHERE "m"."title" ILIKE '%` + search + `%' AND "g"."name" ILIKE '%` + filter + `%'
 		GROUP BY "m"."id", "s"."name", "r"."name"
-	)`
+	) AS "count"`
 	result := services.Info{}
 	data := []services.Movies{}
 	db.Select(&data, sql, limit, offset)
@@ -69,25 +69,25 @@ func FindAllMovies(search string, filter string, orderBy string, limit int, offs
 
 func FindOneMovies(id int) (services.Movies, error) {
 	sql := `SELECT
-	"m"."id" "id",
-	"s"."name" "status",
-	"r"."name" "rating",
-	"m"."title" "title",
-	"m"."image" "image",
-	array_agg(DISTINCT "g"."name") "genre",
-	"m"."director" "director",
-	"m"."casts" "casts",
-	"m"."duration" "duration",
-	"m"."releaseDate" "releaseDate",
-	"m"."sinopsis" "sinopsis",
-	"m"."isRecomended" "isRecomended",
-	"m"."createdAt" "createdAt",
-	"m"."updatedAt" "updatedAt"
-	FROM "movies" "m"
-	LEFT JOIN "status" "s" ON "s"."id"="m"."statusId"
-	LEFT JOIN "rating" "r" ON "r"."id"="m"."ratingId"
-	LEFT JOIN "genreMovies" "gm" ON "gm"."moviesId" = "m"."id"
-	LEFT JOIN "genre" "g" ON "g"."id" = "gm"."genreId"
+	"m"."id" AS "id",
+	"s"."name" AS "status",
+	"r"."name" AS "rating",
+	"m"."title" AS "title",
+	"m"."image" AS "image",
+	array_agg(DISTINCT "g"."name") AS "genre",
+	"m"."director" AS "director",
+	"m"."casts" AS "casts",
+	"m"."duration" AS "duration",
+	"m"."releaseDate" AS "releaseDate",
+	"m"."sinopsis" AS "sinopsis",
+	"m"."isRecomended" AS "isRecomended",
+	"m"."createdAt" AS "createdAt",
+	"m"."updatedAt" AS "updatedAt"
+	FROM "movies" AS "m"
+	LEFT JOIN "status" AS "s" ON "s"."id"="m"."statusId"
+	LEFT JOIN "rating" AS "r" ON "r"."id"="m"."ratingId"
+	LEFT JOIN "genreMovies" AS "gm" ON "gm"."moviesId" = "m"."id"
+	LEFT JOIN "genre" AS "g" ON "g"."id" = "gm"."genreId"
 	WHERE "m"."id" = $1
 	GROUP BY "m"."id", "s"."name", "r"."name"`
 	data := services.Movies{}
