@@ -21,6 +21,7 @@ func main() {
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"http://localhost:5173"},
 		AllowMethods: []string{"GET", "POST", "PATCH", "DELETE"},
+		AllowHeaders: []string{"Authorization"},
 	}))
 	routers.Combine(r)
 	r.NoRoute(noLink)
