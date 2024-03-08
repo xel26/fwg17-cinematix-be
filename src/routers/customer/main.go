@@ -6,7 +6,6 @@ import (
 )
 
 func CustomerRouter(r *gin.RouterGroup) {
-  MovieTimeRouter(r.Group("/movie-time"))
 	authMiddleware, _ := middlewares.Auth()
 	r.Use(authMiddleware.MiddlewareFunc())
 
