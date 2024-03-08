@@ -1,6 +1,7 @@
 package globalControllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -10,19 +11,21 @@ import (
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
 )
 
+func GetMovieCinemaId(c *gin.Context) {
+	movieId, _ := strconv.Atoi(c.Param("movieId"))
 
-func CinemaLocation(c *gin.Context) {
-	cinemaid, _ := strconv.Atoi(c.Param("cinemaid"))
-	location, err := models.CinemaLocationId(cinemaid)
+	movieCinemaId, err := models.FindMovieCinemaByMovieId(movieId)
+	fmt.Println(err)
 	if err != nil {
 		msg := "No Data Match"
-		helpers.Utils(err, msg, c) // Error Handler
+		helpers.Utils(err, msg, c)
 		return
 	}
 
 	c.JSON(http.StatusOK, &services.Response{
 		Success: true,
-		Message: "Detail Cinema Location",
-		Results: location,
+		Message: "ALL Movie Cinema Id",
+		Results: movieCinemaId,
 	})
+
 }
