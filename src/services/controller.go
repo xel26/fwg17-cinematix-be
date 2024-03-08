@@ -59,7 +59,7 @@ type Person struct {
 	FirstName   *string    `db:"firstName" json:"firstName" form:"firstName"`
 	LastName    *string    `db:"lastName" json:"lastName" form:"lastName"`
 	PhoneNumber *string    `db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
-	Picture     *string    `db:"picture" json:"picture" form:"picture"`
+	Picture     *string    `db:"picture" json:"picture"`
 	Point       *int       `db:"point" json:"point"`
 	Password    string     `db:"password" json:"password" form:"password"`
 	CreatedAt   *time.Time `db:"createdAt" json:"createdAt"`
@@ -104,6 +104,7 @@ type Movies struct {
 	UpdatedAt    *time.Time      `db:"updatedAt" json:"updatedAt" form:"updatedAt"`
 }
 
+
 // MOVIE CINEMA
 
 type MovieCinema struct {
@@ -111,4 +112,11 @@ type MovieCinema struct {
 	CinemaId      *pq.Int64Array  `db:"cinemaId" json:"cinemaId" form:"cinemaId"`
 	MovieCinemaId *pq.Int64Array  `db:"movieCinemaId" json:"movieCinemaId" form:"movieCinemaId"`
 	CinemaImage   *pq.StringArray `db:"cinemaImage" json:"cinemaImage" form:"cinemaImage"`
+
+// CINEMA LOCATION
+type CinemaLocation struct {
+	CinemaId         int            `db:"cinemaId" json:"cinemaId"`
+	CinemaLocationId pq.StringArray `db:"cinemaLocationId" json:"cinemaLocationId"`
+	LocationId       pq.StringArray `db:"locationId" json:"LocationId"`
+	Location         pq.StringArray `db:"location" json:"location"`
 }
