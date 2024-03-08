@@ -34,6 +34,12 @@ func Utils(err error, ms string, c *gin.Context) {
 			Message: ms,
 		})
 		return
+	} else if err != nil {
+		c.JSON(http.StatusBadRequest, &services.ResponseBack{
+			Success: false,
+			Message: ms,
+		})
+		return
 	} else {
 		c.JSON(http.StatusInternalServerError, &services.ResponseBack{
 			Success: false,
