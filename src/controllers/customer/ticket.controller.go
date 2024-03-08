@@ -22,7 +22,7 @@ func GetTicket(c *gin.Context) {
 		return
 	}
 
-	result, err := models.GetTicket(c, orderId, userId)
+	result, err := models.GetTicket(orderId, userId)
 	if err != nil{
 		msg := "ticket not found"
 		helpers.Utils(err, msg, c)

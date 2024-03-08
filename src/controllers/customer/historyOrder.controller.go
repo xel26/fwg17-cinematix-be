@@ -14,9 +14,15 @@ func GetHistoryOrder(c *gin.Context) {
 	claims := jwt.ExtractClaims(c)
 	userId := int(claims["id"].(float64))
 
-	result, err := models.GetHistoryOrder(c, userId)
+	result, err := models.GetHistoryOrder(userId)
 	if err != nil{
 		msg := err.Error()
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	if len(result) == 0 {
+		msg := "data history order not found"
 		helpers.Utils(err, msg, c)
 		return
 	}
