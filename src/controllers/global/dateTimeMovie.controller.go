@@ -1,0 +1,121 @@
+package globalControllers
+
+import (
+	"fmt"
+	"net/http"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/putragabrielll/fwg17-cinematix-be/src/helpers"
+	"github.com/putragabrielll/fwg17-cinematix-be/src/models"
+	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
+)
+
+// mengambil date berdasarkan movieCinemaId melalui table moviesTime
+func GetMovieTime(c *gin.Context) {
+	movieCinemaId, _ := strconv.Atoi(c.Query("movieCinemaId"))
+
+	result, err := models.GetMovieTime(movieCinemaId)
+	if err != nil {
+		msg := err.Error()
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	if len(result) == 0 {
+		msg := fmt.Sprintf("movieTime with cinemaId %v not found", movieCinemaId)
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	c.JSON(http.StatusOK, &services.Response{
+		Success: true,
+		Message: "Get movieTime successfully",
+		Results: result,
+	})
+}
+
+
+
+
+// mengambil airing time berdasarkan dateId melalui table airingTimeDateId
+func GetAiringTimeDate(c *gin.Context) {
+	dateId, _ := strconv.Atoi(c.Query("dateId"))
+
+	result, err := models.GetAiringTimeDate(c, dateId)
+	if err != nil {
+		msg := err.Error()
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	if len(result) == 0 {
+		msg := fmt.Sprintf("AiringTimeDate with dateId %v not found", dateId)
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	c.JSON(http.StatusOK, &services.Response{
+		Success: true,
+		Message: "Get airingTimeDate successfully",
+		Results: result,
+	})
+}
+
+
+
+
+// mengambil id movieTime berdasarkan airingTimeDateId dan movieCinemaId
+func GetMovieTimeId(c *gin.Context) {
+	airingTimeDateId, _ := strconv.Atoi(c.Query("airingTimeDateId"))
+	movieCinemaId, _ := strconv.Atoi(c.Query("movieCinemaId"))
+
+	result, err := models.GetMovieTimeId(c, airingTimeDateId, movieCinemaId)
+	
+	if result.Id == 0 {
+		msg := fmt.Sprintf("Movie time with airingTimeDateId %v and movieCinemaId %v not found", airingTimeDateId, movieCinemaId)
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	if err != nil {
+		msg := err.Error()
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	c.JSON(http.StatusOK, &services.Response{
+		Success: true,
+		Message: "Get id movieTime successfully",
+		Results: result,
+	})
+}
+
+
+
+
+// mengambil id airingTimeDate berdasarkan airingTimeId dan dateId
+func GetAiringTimeDateId(c *gin.Context) {
+	airingTimeId, _ := strconv.Atoi(c.Query("airingTimeId"))
+	dateId, _ := strconv.Atoi(c.Query("dateId"))
+
+	result, err := models.GetAiringTimeDateId(c, airingTimeId, dateId)
+	
+	if result.Id == 0 {
+		msg := fmt.Sprintf("airingTimeDate with airingTimeId %v and dateId %v not found", airingTimeId, dateId)
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	if err != nil {
+		msg := err.Error()
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	c.JSON(http.StatusOK, &services.Response{
+		Success: true,
+		Message: "Get id airingTimeDate successfully",
+		Results: result,
+	})
+}

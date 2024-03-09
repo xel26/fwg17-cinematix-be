@@ -69,3 +69,50 @@ func GetHistoryOrder(userId int) ([]HistoryOrder, error) {
 
 	return result, err
 }
+
+
+
+// ticket information page
+func GetHistoryOrderByOrdeId(userId int, orderId int) (HistoryOrder, error) {
+	sql := `
+	SELECT
+	"o"."id",
+	"o"."isUsed",
+	"o"."isPaid",
+	"o"."total",
+	"o"."createdAt",
+	"o"."seatCount",
+	"m"."title",
+	"c"."image",
+	"at"."time",
+	"d"."date",
+	"r"."name" AS "rating",
+	"pm"."accountNumber",
+	array_agg(DISTINCT "od"."seatCode") "seatCode"
+	FROM "order" "o"
+	JOIN "orderDetail" "od" ON ("od"."orderId" = "o"."id")
+	JOIN "moviesTime" "mt" ON ("mt"."id" = "o"."movieTimeId")
+	JOIN "movieCinema" "mc" ON ("mc"."id" = "mt"."movieCinemaId")
+	JOIN "movies" "m" ON ("m"."id" = "mc"."moviesId")
+	JOIN "rating" "r" ON ("r"."id" = "m"."ratingId")
+	JOIN "cinema" "c" ON ("c"."id" = "mc"."cinemaId")
+	JOIN "airingTimeDate" "atd" ON ("atd"."id" = "mt"."airingTimeDateId")
+	JOIN "airingTime" "at" ON ("at"."id" = "atd"."airingTimeId")
+	JOIN "date" "d" ON ("d"."id" = "atd"."dateId")
+	JOIN "paymentMethod" "pm" ON ("pm"."id" = "o"."paymentId")
+	WHERE "o"."usersId" = $1 AND "o"."id" = $2
+	GROUP BY "o"."id", "o"."isUsed", "o"."isPaid", "o"."total", "o"."createdAt", "o"."seatCount", "m"."title", "c"."image", "at"."time", "d"."date", "r"."name", "pm"."accountNumber"
+	ORDER BY "o"."createdAt" DESC
+	`
+
+	result := HistoryOrder{}
+	err := db.Get(&result, sql, userId, orderId)
+	if err != nil {
+		return result, err
+	}
+
+	result.CreatedAt = result.CreatedAt.Add(24 * time.Hour)
+
+
+	return result, err
+}

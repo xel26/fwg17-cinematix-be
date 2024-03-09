@@ -7,4 +7,5 @@ import (
 
 func HistoryOrderRouter(r *gin.RouterGroup){
 	r.GET("", customerControllers.GetHistoryOrder)
+	r.GET("/ticket", customerControllers.GetHistoryOrderByOrdeId)
 }
