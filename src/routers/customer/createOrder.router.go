@@ -5,6 +5,6 @@ import (
 	customerControllers "github.com/putragabrielll/fwg17-cinematix-be/src/controllers/customer"
 )
 
-func TicketRouter(r *gin.RouterGroup){
-	r.GET("", customerControllers.GetTicket)
+func CreateOrderRouter(r *gin.RouterGroup){
+	r.POST("", customerControllers.CreateOrder)
 }

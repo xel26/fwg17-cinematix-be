@@ -13,7 +13,6 @@ func CustomerRouter(r *gin.RouterGroup) {
 	MovieRouter(r.Group("/movies"))
 	HistoryOrderRouter(r.Group("/history-order"))
 	PaymentInfoRouter(r.Group("/payment-info"))
-	TicketRouter(r.Group("/ticket"))
 	ReservedSeatRouter(r.Group("/reserved-seat"))
-	// CreateOrderRouter(r.Group("/create-order"))
+	CreateOrderRouter(r.Group("/create-order"))
 }
