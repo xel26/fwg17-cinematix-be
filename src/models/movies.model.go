@@ -1,10 +1,21 @@
 package models
 
 import (
+	"fmt"
+
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
 )
 
-func FindAllMovies(search string, filter string, orderBy string, limit int, offset int) (services.Info, error) {
+func FindAllMovies(search string, filter string, orderBy string, limit int, offset int, status string) (services.Info, error) {
+	addQuery := ""
+	if status == "coming soon" {
+		addQuery = ` AND "s"."id" = 1 `
+	} else if status == "now airing" {
+		addQuery = ` AND "s"."id" = 2 `
+	} else {
+		addQuery = ""
+	}
+
 	sql := `
 	SELECT
 	"m"."id" AS "id",
@@ -26,8 +37,8 @@ func FindAllMovies(search string, filter string, orderBy string, limit int, offs
 	LEFT JOIN "rating" AS "r" ON "r"."id"="m"."ratingId"
 	LEFT JOIN "genreMovies" AS "gm" ON "gm"."moviesId" = "m"."id"
 	LEFT JOIN "genre" AS "g" ON "g"."id" = "gm"."genreId"
-	WHERE "m"."title" ILIKE '%` + search + `%' AND "g"."name" ILIKE '%` + filter + `%'
-	GROUP BY "m"."id", "s"."name", "r"."name"
+	WHERE "m"."title" ILIKE '%` + search + `%' AND "g"."name" ILIKE '%` + filter + `%'` + addQuery +
+		`GROUP BY "m"."id", "s"."name", "r"."name"
 	ORDER BY "` + orderBy + `" ASC
 	LIMIT $1
 	OFFSET $2
@@ -53,9 +64,11 @@ func FindAllMovies(search string, filter string, orderBy string, limit int, offs
 		LEFT JOIN "rating" AS "r" ON "r"."id"="m"."ratingId"
 		LEFT JOIN "genreMovies" AS "gm" ON "gm"."moviesId" = "m"."id"
 		LEFT JOIN "genre" AS "g" ON "g"."id" = "gm"."genreId"
-		WHERE "m"."title" ILIKE '%` + search + `%' AND "g"."name" ILIKE '%` + filter + `%'
-		GROUP BY "m"."id", "s"."name", "r"."name"
+		WHERE "m"."title" ILIKE '%` + search + `%' AND "g"."name" ILIKE '%` + filter + `%'` + addQuery +
+		`GROUP BY "m"."id", "s"."name", "r"."name"
 	) AS "count"`
+
+	fmt.Print(sql)
 	result := services.Info{}
 	data := []services.Movies{}
 	db.Select(&data, sql, limit, offset)
