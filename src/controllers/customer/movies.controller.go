@@ -12,6 +12,7 @@ import (
 )
 
 func ListAllMovies(c *gin.Context) {
+	status := c.DefaultQuery("status", "")
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "6"))
 	search := c.DefaultQuery("search", "")
@@ -19,7 +20,7 @@ func ListAllMovies(c *gin.Context) {
 	orderBy := c.DefaultQuery("orderBy", "id")
 
 	offset := (page - 1) * limit
-	result, err := models.FindAllMovies(search, filter, orderBy, limit, offset)
+	result, err := models.FindAllMovies(search, filter, orderBy, limit, offset, status)
 
 	totalPage := int(math.Ceil(float64(result.Count) / float64(limit)))
 
