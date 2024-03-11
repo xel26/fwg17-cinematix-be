@@ -1,7 +1,6 @@
 package customerControllers
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -33,7 +32,7 @@ func GetReservedSeat(c *gin.Context) {
 	// }
 
 	
-	fmt.Println(result)
+	// fmt.Println(result)
 	c.JSON(http.StatusOK, &services.Response{
 		Success: true,
 		Message: "Get reserved seat success",

@@ -46,7 +46,7 @@ func GetHistoryOrderByOrdeId(c *gin.Context) {
 	orderId, _ := strconv.Atoi(c.Query("orderId"))
 
 	result, err := models.GetHistoryOrderByOrdeId(userId, orderId)
-	fmt.Println(result)
+	// fmt.Println(result)
 	if err != nil{
 		msg := err.Error()
 

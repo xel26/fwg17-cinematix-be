@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
 )
 
@@ -68,7 +66,7 @@ func FindAllMovies(search string, filter string, orderBy string, limit int, offs
 		`GROUP BY "m"."id", "s"."name", "r"."name"
 	) AS "count"`
 
-	fmt.Print(sql)
+	// fmt.Print(sql)
 	result := services.Info{}
 	data := []services.Movies{}
 	db.Select(&data, sql, limit, offset)
