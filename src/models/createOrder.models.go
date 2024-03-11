@@ -1,24 +1,23 @@
 package models
 
 import (
-	"database/sql"
 	"time"
 )
 
 type Order struct {
-	Id               int       `db:"id" json:"id"`
-	OrderNumber      string    `db:"orderNumber" json:"orderNumber" form:"orderNumber"`
-	UserId           int       `db:"usersId" json:"userId" form:"userId"`
-	CinemaLocationId int       `db:"cinemaLocationId" json:"cinemaLocationId" form:"cinemaLocationId"`
-	PaymentId        int       `db:"paymentId" json:"paymentId" form:"paymentId"`
-	MovieTimeId      int       `db:"movieTimeId" json:"movieTimeId" form:"movieTimeId"`
-	SeatCount        int       `db:"seatCount" json:"seatCount" form:"seatCount"`
-	IsPaid           bool      `db:"isPaid" json:"isPaid" form:"isPaid"`
-	IsUsed           bool      `db:"isUsed" json:"isUsed" form:"isUsed"`
-	Total            int       `db:"total" json:"total" form:"total"`
-	SeatCode         string    `db:"seatCode" json:"seatCode" form:"seatCode"`
-	CreatedAt        time.Time `db:"createdAt" json:"createdAt"`
-	UpdatedAt        sql.NullTime `db:"updatedAt" json:"updatedAT"`
+	Id               int        `db:"id" json:"id"`
+	OrderNumber      string     `db:"orderNumber" json:"orderNumber" form:"orderNumber"`
+	UserId           int        `db:"usersId" json:"userId" form:"userId"`
+	CinemaLocationId int        `db:"cinemaLocationId" json:"cinemaLocationId" form:"cinemaLocationId"`
+	PaymentId        int        `db:"paymentId" json:"paymentId" form:"paymentId"`
+	MovieTimeId      int        `db:"movieTimeId" json:"movieTimeId" form:"movieTimeId"`
+	SeatCount        int        `db:"seatCount" json:"seatCount" form:"seatCount"`
+	IsPaid           bool       `db:"isPaid" json:"isPaid" form:"isPaid"`
+	IsUsed           bool       `db:"isUsed" json:"isUsed" form:"isUsed"`
+	Total            int        `db:"total" json:"total" form:"total"`
+	SeatCode         string     `db:"seatCode" json:"seatCode" form:"seatCode"`
+	CreatedAt        time.Time  `db:"createdAt" json:"createdAt"`
+	UpdatedAt        *time.Time `db:"updatedAt" json:"updatedAt"`
 }
 
 type cinemaPrice struct {
