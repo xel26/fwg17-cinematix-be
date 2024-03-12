@@ -8,6 +8,7 @@ func FindMovieCinemaByMovieId(movieId int) (services.MovieCinema, error) {
 	"m"."id" AS "movieId",
 	array_agg(distinct "c"."id") AS "cinemaId",
 	array_agg(distinct "c"."name") AS "cinemaName",
+	array_agg(distinct "c"."price") AS "cinemaPrice",
 	array_agg(distinct "mc"."id") AS "movieCinemaId",
 	array_agg(distinct "c"."image") AS "cinemaImage"
 	FROM "cinema" AS "c"

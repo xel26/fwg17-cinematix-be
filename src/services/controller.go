@@ -110,7 +110,8 @@ type Movies struct {
 type MovieCinema struct {
 	MovieId       int             `db:"movieId" json:"movieId"`
 	CinemaId      *pq.Int64Array  `db:"cinemaId" json:"cinemaId" form:"cinemaId"`
-	CinemaName    *pq.StringArray  `db:"cinemaName" json:"cinemaName" form:"cinemaName"`
+	CinemaName    *pq.StringArray `db:"cinemaName" json:"cinemaName"`
+	CinemaPrice   *pq.Int64Array  `db:"cinemaPrice" json:"cinemaPrice"`
 	MovieCinemaId *pq.Int64Array  `db:"movieCinemaId" json:"movieCinemaId" form:"movieCinemaId"`
 	CinemaImage   *pq.StringArray `db:"cinemaImage" json:"cinemaImage" form:"cinemaImage"`
 }
