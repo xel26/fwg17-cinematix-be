@@ -14,5 +14,6 @@ func CustomerRouter(r *gin.RouterGroup) {
 	HistoryOrderRouter(r.Group("/history-order"))
 	PaymentInfoRouter(r.Group("/payment-info"))
 	ReservedSeatRouter(r.Group("/reserved-seat"))
-	CreateOrderRouter(r.Group("/create-order"))
+	CreateOrderRouter(r.Group(""))
+	PaymentMethodRouter(r.Group("/payment-method"))
 }

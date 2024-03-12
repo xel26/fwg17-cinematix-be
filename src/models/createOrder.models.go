@@ -24,6 +24,7 @@ type cinemaPrice struct {
 	Price int `db:"price" json:"price"`
 }
 
+
 func InsertOrder(data Order) (Order, error) {
 	sql := `
 	INSERT INTO "order" ("orderNumber", "usersId", "cinemaLocationId", "paymentId", "seatCount", "isPaid", "isUsed", "total", "movieTimeId")
@@ -47,6 +48,8 @@ func InsertOrder(data Order) (Order, error) {
 	return result, err
 }
 
+
+
 func GetCinemaPrice(MovieTime int) (cinemaPrice, error) {
 	sql := `
 	SELECT "c"."price"
@@ -62,4 +65,30 @@ func GetCinemaPrice(MovieTime int) (cinemaPrice, error) {
 	}
 
 	return data, err
+}
+
+
+
+func UpdatePaidStatusOrder(data Order) (Order, error) {
+	sql := `
+	UPDATE "order" SET
+	"isPaid"=true,
+	"updatedAt"=Now()
+	WHERE "id"=:id AND "usersId"=:usersId
+	RETURNING *
+	`
+	result := Order{}
+	rows, err := db.NamedQuery(sql, data)
+	if err != nil {
+		return result, err
+	}
+
+	for rows.Next() {
+		err := rows.StructScan(&result)
+		if err != nil {
+			return result, err
+		}
+	}
+
+	return result, err
 }
