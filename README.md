@@ -1,17 +1,17 @@
-# fwg17-cinematix-be
+# CinemaTix-be
 
-Welcome to the Coffee Shop Backend Web Project! This repository contains the back-end source code for the Online Coffee Shop web application. With Express.js and NodeJs structure.
+Welcome to the CinemaTix Backend Web Project! This repository contains the back-end source code for an online movie ticket booking application. With Go programming language and using Gin-Gonic structure.
 
-Find a wide range of selected coffee, from coffee beans, ground coffee, to quality coffee equipment here. Order your favorite coffee easily and enjoy the best coffee experience at home.
+You can choose your favorite movie, time, and seat, and make payments safely and conveniently. CinemaTix also provides complete information about movies and theaters, real-time theater layouts, barcode tickets.
 
 
 ## Features
 
- - Explore a wide range of coffee products from various local and international roasters.
- - Read complete product descriptions to help you choose the right coffee.
- - Order coffee easily and safely through a trusted online payment system.
-- Get exciting promos and special offers.
-- Easily monitor your order status.
+- Complete Film Information and Bioskop Schedule.
+- Choose films, dates, times, and seats conveniently.
+- Efficient and User-Friendly Booking Process
+- View nationwide cinema schedules and seat layouts.
+- Access trailers, synopses, ratings, and cast details.
 
 Built using
 
@@ -20,7 +20,6 @@ Built using
 ![Go](https://img.shields.io/badge/Go-blue?style=for-the-badge&logo=go&logoColor=white)
 ![gin-gonic](https://img.shields.io/badge/gin-1DA1F2?style=for-the-badge&logo=gin&logoColor=white)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 ![Google Chrome](https://img.shields.io/badge/Google%20Chrome-4285F4?style=for-the-badge&logo=GoogleChrome&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
@@ -33,8 +32,8 @@ To run the project locally, follow these simple steps:
 
 1. Clone this repository
 ```sh
-  git clone https://github.com/putragabrielll/fwg17-go-backend
-  cd fwg17-go-backend
+  git clone https://github.com/putragabrielll/fwg17-cinematix-be
+  cd fwg17-cinematix-be
 ```
 
 2. Open in VSCode
@@ -57,11 +56,15 @@ To run the project locally, follow these simple steps:
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`PORT`
-
-`DATABASE_URL`
+`DATABASE_CONNECT`
 
 `APP_SECRET`
+
+`CLOUDINARY_CLOUD_NAME`
+
+`CLOUDINARY_API_KEY`
+
+`CLOUDINARY_API_SECRET`
 
 
 ## API Reference
@@ -69,79 +72,38 @@ To run this project, you will need to add the following environment variables to
 #### Login
 
 ```http
-  POST /login
+  POST /auth/login
 ```
 #### Register
 
 ```http
-  POST /register
-```
-#### Forgot Password
-
-```http
-  POST /forgot-password
+  POST /auth/register
 ```
 
+### Customer API
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `users` | `GET` | Get a list of users data |
-| `users/:id` | `GET` | Get a detailed users data |
-| `users` | `POST` | Insert a users data |
-| `users/:id` | `PATCH` | Update a users data |
-| `users/:id` | `DELETE` | Delete a users data |
-| `products` | `GET` | Get a list of products data |
-| `products/:id` | `GET` | Get a detailed products data |
-| `products` | `POST` | Insert a products data |
-| `products/:id` | `PATCH` | Update a products data |
-| `products/:id` | `DELETE` | Delete a products data |
-| `promo` | `GET` | Get a list of promo data |
-| `promo/:id` | `GET` | Get a detailed promo data |
-| `promo` | `POST` | Insert a promo data |
-| `promo/:id` | `PATCH` | Update a promo data |
-| `promo/:id` | `DELETE` | Delete a promo data |
-| `product-size` | `GET` | Get a list of product size data |
-| `product-size/:id` | `GET` | Get a detailed product size data |
-| `product-size/:id` | `PATCH` | Update a product size data |
-| `product-variant` | `GET` | Get a list of product variant data |
-| `product-variant/:id` | `GET` | Get a detailed product variant data |
-| `product-variant` | `POST` | Insert a product variant data |
-| `product-variant/:id` | `PATCH` | Update a product variant data |
-| `product-variant/:id` | `DELETE` | Delete a product variant data |
-| `categories` | `GET` | Get a list of categories data |
-| `categories/:id` | `GET` | Get a detailed categories data |
-| `categories` | `POST` | Insert a categories data |
-| `categories/:id` | `PATCH` | Update a categories data |
-| `categories/:id` | `DELETE` | Delete a categories data |
-| `tags` | `GET` | Get a list of tags data |
-| `tags/:id` | `GET` | Get a detailed tags data |
-| `tags` | `POST` | Insert a tags data |
-| `tags/:id` | `PATCH` | Update a tags data |
-| `tags/:id` | `DELETE` | Delete a tags data |
-| `product-tags` | `GET` | Get a list of product tags data |
-| `product-tags/:id` | `GET` | Get a detailed product tags data |
-| `product-tags` | `POST` | Insert a product tags data |
-| `product-tags/:id` | `PATCH` | Update a product tags data |
-| `product-tags/:id` | `DELETE` | Delete a product tags data |
-| `product-categories` | `GET` | Get a list of product categories data |
-| `product-categories/:id` | `GET` | Get a detailed product categories data |
-| `product-categories` | `POST` | Insert a product categories data |
-| `product-categories/:id` | `PATCH` | Update a product categories data |
-| `product-categories/:id` | `DELETE` | Delete a product categories data |
-| `product-ratings` | `GET` | Get a list of product ratings data |
-| `product-ratings/:id` | `GET` | Get a detailed product ratings data |
-| `product-ratings` | `POST` | Insert a product ratings data |
-| `product-ratings/:id` | `PATCH` | Update a product ratings data |
-| `product-ratings/:id` | `DELETE` | Delete a product ratings data |
-| `orders` | `GET` | Get a list of orders data |
-| `orders/:id` | `GET` | Get a detailed orders data |
-| `orders` | `POST` | Insert a orders data |
-| `orders/:id` | `PATCH` | Update a orders data |
-| `orders/:id` | `DELETE` | Delete a orders data |
-| `order-details` | `GET` | Get a list of order details data |
-| `order-details/:id` | `GET` | Get a detailed order details data |
-| `order-details` | `POST` | Insert a order details data |
-| `order-details/:id` | `PATCH` | Update a order details data |
-| `order-details/:id` | `DELETE` | Delete a order details data |
+| `/customer/profile` | `GET` | Get a profile data |
+| `/customer/profile` | `PATCH` | Update a profile data |
+| `/customer/payment-info` | `GET` | Get a payments data |
+| `/customer/history-order` | `GET` | Get a history order |
+| `/customer/history-order/ticket?orderId=` | `GET` | Get a tickets |
+| `/customer/payment-method` | `GET` | Get list all payment method |
+| `/customer/create-order` | `POST` | Create orders |
+| `/customer/update-paid-status/:orderId` | `POST` | Update paid status |
+
+### Global API
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `/movies` | `GET` | Get a list of movie data |
+| `/movies/:id` | `GET` | Get a detailed movie data |
+| `/movie-time` | `GET` | Get a movie time |
+| `/airing-time-date` | `GET` | Get airing time date |
+| `/movie-time-id` | `GET` | Get movie time ID |
+| `/airing-time-date-id` | `GET` | Get airing time date ID |
+| `/movie-cinema/:movieId` | `GET` | Get movie cinema |
+| `/cinema-location/:cinemaid` | `GET` | Get cinema location |
+
 
 ## Technologies Used
 
@@ -150,7 +112,7 @@ To run this project, you will need to add the following environment variables to
 **Go:** Go serves as the foundation for this project, utilizing a non-blocking and event-driven architecture to ensure scalable and high-performance server-side application development.
 
 ## ✍️ Coffee Shop - Frontend Repository
-https://github.com/putragabrielll/fwg17-beginner-frontend
+https://github.com/rayfarandi/fwg17-cinematix-fe
 
 ## Technologies Used
 
@@ -167,8 +129,13 @@ Contributions are always welcome!
 
 ## Authors
 
+- [@dzulfiqar](https://github.com/DzulfiqarSiraj)
+- [@haidar](https://github.com/patih1)
+- [@nanda](https://github.com/xel26)
 - [@putragabrielll](https://github.com/putragabrielll)
+- [@ray](https://github.com/rayfarandi)
+- [@wisnu](https://github.com/wisnu31899)
 
 ## Feedback
 
-If you have any feedback, please reach out to us at puragmahk@gmail.com
+If you have any feedback, please create new issue.
