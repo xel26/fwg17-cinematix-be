@@ -6,5 +6,6 @@ import (
 )
 
 func CreateOrderRouter(r *gin.RouterGroup){
-	r.POST("", customerControllers.CreateOrder)
+	r.POST("/create-order", customerControllers.CreateOrder)
+	r.PATCH("/update-paid-status/:orderId", customerControllers.UpdatePaidStatusOrder)
 }

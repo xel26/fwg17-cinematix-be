@@ -26,6 +26,45 @@ func CreateOrder(c *gin.Context) {
 		return
 	}
 
+	_, err = models.FindOneCinemaLocation(dataOrder.CinemaLocationId)
+	if err != nil{
+		msg := err.Error()
+		
+		if strings.HasPrefix(err.Error(), "sql: no rows"){
+			msg = fmt.Sprintf("cinemaLocation with id %v not found", dataOrder.CinemaLocationId)
+		}
+
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	
+	_, err = models.FindOneMovieTime(dataOrder.MovieTimeId)
+	if err != nil{
+		msg := err.Error()
+		
+		if strings.HasPrefix(err.Error(), "sql: no rows"){
+			msg = fmt.Sprintf("moviesTime with id %v not found", dataOrder.MovieTimeId)
+		}
+
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+
+	_, err = models.FindOnePaymentMethod(dataOrder.PaymentId)
+	if err != nil{
+		msg := err.Error()
+		
+		if strings.HasPrefix(err.Error(), "sql: no rows"){
+			msg = fmt.Sprintf("payment method with id %v not found", dataOrder.PaymentId)
+		}
+
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+
 	dataOrder.UserId = userId
 	dataOrder.OrderNumber = lib.RandomNumber(6)
 	dataOrder.IsPaid = false
@@ -96,5 +135,38 @@ func GetMovieTime(c *gin.Context){
 		Success: true,
 		Message: "Get movie time successfully",
 		Results: result,
+	})
+}
+
+
+
+
+
+func UpdatePaidStatusOrder(c *gin.Context){
+	orderId, _ := strconv.Atoi(c.Param("orderId"))
+
+	claims := jwt.ExtractClaims(c)
+	userId := int(claims["id"].(float64))
+	
+	dataOrder := models.Order{}
+	dataOrder.UserId = userId
+	dataOrder.Id = orderId
+
+	order, err := models.UpdatePaidStatusOrder(dataOrder)
+	if err != nil{
+		msg := err.Error()
+
+		if order.Id == 0 {
+			msg = fmt.Sprintf("user with id %v does not have order with id %v", userId, orderId)
+		}
+
+		helpers.Utils(err, msg, c)
+		return
+	}
+
+	c.JSON(http.StatusOK, &services.Response{
+		Success: true,
+		Message: "update paid status order successfully",
+		Results: order,
 	})
 }
