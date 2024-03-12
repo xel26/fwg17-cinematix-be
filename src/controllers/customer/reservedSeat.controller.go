@@ -11,15 +11,11 @@ import (
 )
 
 func GetReservedSeat(c *gin.Context) {
-	movieId, _ := strconv.Atoi(c.Query("movieId"))
-	cinemaId, _ := strconv.Atoi(c.Query("cinemaId"))
-	locationId, _ := strconv.Atoi(c.Query("locationId"))
-	airingTimeId, _ := strconv.Atoi(c.Query("airingTimeId"))
-	dateId, _ := strconv.Atoi(c.Query("dateId"))
+	movieTimeId, _ := strconv.Atoi(c.Query("movieTimeId"))
+	cinemaLocationId, _ := strconv.Atoi(c.Query("cinemaLocationId"))
 
-
-	result, err := models.GetReservedSeat(movieId, cinemaId, locationId, airingTimeId, dateId)
-	if err != nil{
+	result, err := models.GetReservedSeat(movieTimeId, cinemaLocationId)
+	if err != nil {
 		msg := err.Error()
 		helpers.Utils(err, msg, c)
 		return
@@ -31,7 +27,6 @@ func GetReservedSeat(c *gin.Context) {
 	// 	return
 	// }
 
-	
 	// fmt.Println(result)
 	c.JSON(http.StatusOK, &services.Response{
 		Success: true,
