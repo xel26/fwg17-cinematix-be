@@ -111,7 +111,7 @@ To run this project, you will need to add the following environment variables to
 
 **Go:** Go serves as the foundation for this project, utilizing a non-blocking and event-driven architecture to ensure scalable and high-performance server-side application development.
 
-## ✍️ Coffee Shop - Frontend Repository
+## ✍️ CinemaTix - Frontend Repository
 https://github.com/rayfarandi/fwg17-cinematix-fe
 
 ## Technologies Used
