@@ -11,7 +11,6 @@ import (
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
 )
 
-
 func ListMovies(c *gin.Context) {
 	search := c.DefaultQuery("month", "march")
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
@@ -19,7 +18,7 @@ func ListMovies(c *gin.Context) {
 	offset := (page - 1) * limit
 
 	countData, _ := adminModels.CountAllMovies(search)
-	page_total := int(math.Ceil(float64(countData)/float64(limit)))
+	page_total := int(math.Ceil(float64(countData) / float64(limit)))
 
 	movies, err := adminModels.ListAllMovies(search, limit, offset)
 	if err != nil {
@@ -36,9 +35,27 @@ func ListMovies(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, &services.ResponseList{
-		Success: true,
-		Message: "List all movies",
+		Success:  true,
+		Message:  "List all movies",
 		PageInfo: *pageInfo,
-		Results: movies,
+		Results:  movies,
 	})
+}
+
+func DeleteMovies(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	deleteMovies, err := adminModels.DeleteMovies(id)
+
+	if err != nil {
+		msg := "No Data Match"
+		helpers.Utils(err, msg, c) // Error Handler
+		return
+	}
+	c.JSON(http.StatusOK, &services.Response{
+		Success: true,
+		Message: "Delete movies successfully",
+		Results: deleteMovies,
+	})
+
 }
