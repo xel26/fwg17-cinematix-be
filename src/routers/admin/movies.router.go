@@ -8,4 +8,5 @@ import (
 
 func listmoviesRouter(rg *gin.RouterGroup){
 	rg.GET("", adminControllers.ListMovies)
+	rg.PATCH("/delete/:id", adminControllers.DeleteMovies)
 }

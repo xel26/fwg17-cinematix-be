@@ -33,9 +33,8 @@ func ListAllMovies(search string, limit int, offset int) ([]services.AdminListMo
 	return data, err
 }
 
-
 // Count All Movies
-func CountAllMovies(filter string) (int, error){
+func CountAllMovies(filter string) (int, error) {
 	var count int
 	fmtsearch := fmt.Sprintf("%v", filter)
 	sql := `
@@ -48,4 +47,17 @@ func CountAllMovies(filter string) (int, error){
 	`
 	err := lib.DbConnection().Get(&count, sql, fmtsearch)
 	return count, err
+}
+
+// Delete Movies
+func DeleteMovies(id int) (services.AdminDeleteMovies, error) {
+	sql := `
+	UPDATE "movies" 
+	SET "statusId"=3
+	WHERE "id"=$1
+	RETURNING *
+    `
+	data := services.AdminDeleteMovies{}
+	err := lib.DbConnection().Get(&data, sql, id)
+	return data, err
 }

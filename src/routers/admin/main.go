@@ -10,4 +10,5 @@ func AdminRouter(r *gin.RouterGroup) {
 	r.Use(authMiddleware.MiddlewareFunc())
 
 	listmoviesRouter(r.Group("/list-movies"))
+	listmoviesRouter(r.Group("/movies"))
 }
