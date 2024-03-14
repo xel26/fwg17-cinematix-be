@@ -1,11 +1,37 @@
 package adminModels
 
 import (
+	"database/sql"
 	"fmt"
+	"time"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/putragabrielll/fwg17-cinematix-be/src/lib"
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
 )
+
+type Movie struct {
+	Id       int    `db:"id" json:"id"`
+	StatusId int    `db:"statusId" json:"statusId" form:"statusId"`
+	RatingId int    `db:"ratingId" json:"ratingId" form:"ratingId"`
+	Title    string `db:"title" json:"title" form:"title"`
+	Image    string `db:"image" json:"image"`
+	Director string `db:"director" json:"director" form:"director"`
+	Casts    string `db:"casts" json:"casts" form:"casts"`
+	Duration string `db:"duration" json:"duration" form:"duration"`
+	ReleaseDate time.Time `db:"releaseDate" json:"releaseDate" form:"releaseDate"`
+	Sinopsis string `db:"sinopsis" json:"sinopsis" form:"sinopsis"`
+	IsRecomended bool `db:"isRecomended" json:"isRecomended" form:"isRecomended"`
+	CreatedAt time.Time `db:"createdAt" json:"createdAt"`
+	UpdatedAt sql.NullTime `db:"updatedAt" json:"updatedAt"`
+}
+
+
+
+// undefined! tidak bisa akses db di users.model.go walaupun menggunakna "package models" yg sama, sehingga di deklarasi ulang di sini
+var db *sqlx.DB = lib.DbConnection()
+
+
 
 // ------------ ADMIN ------------
 // SELECT * products
@@ -48,4 +74,31 @@ func CountAllMovies(filter string) (int, error){
 	`
 	err := lib.DbConnection().Get(&count, sql, fmtsearch)
 	return count, err
+}
+
+
+
+
+func InsertMovie(data services.AddNewMovie) (Movie, error) {
+	sql := `
+	INSERT INTO "movies"
+	("statusId", "ratingId", "title", "image", "director", "casts", "duration", "releaseDate", "sinopsis", "isRecomended")
+	VALUES
+	(:statusId, :ratingId, :title, :image, :director, :casts, :duration, :releaseDate, :sinopsis, :isRecomended)
+	RETURNING *
+	`
+	result := Movie{}
+	rows, err := db.NamedQuery(sql, data)
+	if err != nil {
+		return result, err
+	}
+
+	for rows.Next(){
+		err := rows.StructScan(&result)
+		if err != nil{
+			return result, err
+		}
+	}
+
+	return result, err
 }
