@@ -64,12 +64,12 @@ func CountAllMovies(filter string) (int, error) {
 	var count int
 	fmtsearch := fmt.Sprintf("%v", filter)
 	sql := `
-	SELECT DISTINCT 
-	COUNT("m"."id")
+	SELECT COUNT(*) FROM (SELECT DISTINCT 
+	"m"."id"
 	FROM "movies" "m"
 	INNER JOIN "genreMovies" "gm" ON "gm"."moviesId"="m"."id"
 	INNER JOIN "genre" "g" ON "g"."id"="gm"."genreId"
-	WHERE TRIM(UPPER(to_char("m"."createdAt",'Month'))) = UPPER($1)
+	WHERE TRIM(UPPER(to_char("m"."createdAt",'Month'))) = UPPER($1))
 	`
 	err := lib.DbConnection().Get(&count, sql, fmtsearch)
 	return count, err

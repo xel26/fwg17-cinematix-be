@@ -1,6 +1,7 @@
 package adminControllers
 
 import (
+	"fmt"
 	"math"
 	"net/http"
 	"strconv"
@@ -18,6 +19,7 @@ func ListMovies(c *gin.Context) {
 	offset := (page - 1) * limit
 
 	countData, _ := adminModels.CountAllMovies(search)
+	fmt.Println(countData)
 	page_total := int(math.Ceil(float64(countData) / float64(limit)))
 
 	movies, err := adminModels.ListAllMovies(search, limit, offset)
