@@ -23,9 +23,16 @@ func ListAllMovies(c *gin.Context) {
 	result, err := models.FindAllMovies(search, filter, orderBy, limit, offset, status)
 
 	totalPage := int(math.Ceil(float64(result.Count) / float64(limit)))
+	nextPage := page + 1
+    if !(nextPage <= int(totalPage)) {
+		nextPage = int(0)
+	}
+    prevPage := page - 1
 
 	pageInfo := &services.PageInfo{
 		CurrentPage: page,
+		NextPage:    nextPage,
+        PrevPage:    prevPage,
 		Limit:       limit,
 		TotalPage:   totalPage,
 		TotalData:   result.Count,
