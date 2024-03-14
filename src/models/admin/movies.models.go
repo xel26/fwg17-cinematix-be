@@ -59,9 +59,8 @@ func ListAllMovies(search string, limit int, offset int) ([]services.AdminListMo
 	return data, err
 }
 
-
 // Count All Movies
-func CountAllMovies(filter string) (int, error){
+func CountAllMovies(filter string) (int, error) {
 	var count int
 	fmtsearch := fmt.Sprintf("%v", filter)
 	sql := `
@@ -76,9 +75,7 @@ func CountAllMovies(filter string) (int, error){
 	return count, err
 }
 
-
-
-
+// Insert Movies
 func InsertMovie(data services.AddNewMovie) (Movie, error) {
 	sql := `
 	INSERT INTO "movies"
@@ -101,4 +98,17 @@ func InsertMovie(data services.AddNewMovie) (Movie, error) {
 	}
 
 	return result, err
+}
+
+// Delete Movies
+func DeleteMovies(id int) (services.AdminDeleteMovies, error) {
+	sql := `
+	UPDATE "movies" 
+	SET "statusId"=3
+	WHERE "id"=$1
+	RETURNING *
+    `
+	data := services.AdminDeleteMovies{}
+	err := lib.DbConnection().Get(&data, sql, id)
+	return data, err
 }

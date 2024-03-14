@@ -138,6 +138,8 @@ type AdminListMovies struct {
 	ReleaseDate  *time.Time      `db:"releaseDate" json:"releaseDate"`
 	Duration     *string         `db:"duration" json:"duration"`
 }
+
+
 // ADMIN ADD NEW MOVIE
 type AddNewMovie struct {
 	Id           int          `db:"id" json:"id"`
@@ -157,4 +159,22 @@ type AddNewMovie struct {
 	Location     string       `db:"location" json:"location" form:"location"`
 	Date         string       `db:"date" json:"date" form:"date"`
 	AiringTime   string       `db:"airingTime" json:"airingTime" form:"airingTime"`
+}
+
+
+// Delete movies
+type AdminDeleteMovies struct {
+	Id           int            `db:"id" json:"id"`
+	StatusId     *int         	`db:"statusId" json:"statusId"`
+	RatingId     *int         	`db:"ratingId" json:"ratingId"`
+	Title        *string        `db:"title" json:"title"`
+	Image        *string        `db:"image" json:"image"`
+	Director     *string         `db:"director" json:"director"`
+	Casts        *string         `db:"casts" json:"casts"`
+	Duration     *string         `db:"duration" json:"duration"`
+	ReleaseDate  *time.Time      `db:"releaseDate" json:"releaseDate"`
+	Sinopsis     *string         `db:"sinopsis" json:"sinopsis"`
+	IsRecomended *bool           `db:"isRecomended" json:"isRecomended"`
+	CreatedAt    *time.Time      `db:"createdAt" json:"createdAt"`
+	UpdatedAt    *time.Time      `db:"updatedAt" json:"updatedAt"`
 }
