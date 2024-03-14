@@ -8,7 +8,7 @@ import (
 	globalRouters "github.com/putragabrielll/fwg17-cinematix-be/src/routers/global"
 )
 
-func Combine(r *gin.Engine){
+func Combine(r *gin.Engine) {
 	//------------ AUTH ------------
 	authRouters.AuthRouter(r.Group("/auth"))
 
