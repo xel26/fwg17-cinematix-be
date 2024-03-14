@@ -2,8 +2,8 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	authRouters "github.com/putragabrielll/fwg17-cinematix-be/src/routers/auth"
 	adminRouters "github.com/putragabrielll/fwg17-cinematix-be/src/routers/admin"
+	authRouters "github.com/putragabrielll/fwg17-cinematix-be/src/routers/auth"
 	customerRouters "github.com/putragabrielll/fwg17-cinematix-be/src/routers/customer"
 	globalRouters "github.com/putragabrielll/fwg17-cinematix-be/src/routers/global"
 )

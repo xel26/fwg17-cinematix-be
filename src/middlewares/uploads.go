@@ -22,7 +22,7 @@ func UploadFile(c *gin.Context, form string, dest string) (string, error) {
 	cld, _ := cloudinary.NewFromParams(cloudName, cloudAPI, apiSecret)
 
 	var ctx = context.Background()
-	file, _ := c.FormFile(form) // "picture" => nama field / nama form
+	file, _ := c.FormFile(form)		// => agar dinamis sehingga fungsi upload dapat di gunakan di table lain dengan nama field yg berbeda, misal "image"
 	extensionFile := file.Header["Content-Type"][0]
 
 	ext := map[string]string{
@@ -50,6 +50,10 @@ func UploadFile(c *gin.Context, form string, dest string) (string, error) {
 	
 	fileLocCloudinary := fmt.Sprintf("cinematix/%v/%v", dest, renameFile)
 	// fileLocCloudinary := fmt.Sprintf("cinematix/movies/%v", renameFile) // untuk numpang upload file ke cloudinary
-	resp, _ := cld.Upload.Upload(ctx, file, uploader.UploadParams{PublicID: fileLocCloudinary})
+	resp, err := cld.Upload.Upload(ctx, file, uploader.UploadParams{PublicID: fileLocCloudinary})
+	if err != nil {
+		return resp.SecureURL, c.Err()
+	}
+
 	return resp.SecureURL, c.Err()
 }
