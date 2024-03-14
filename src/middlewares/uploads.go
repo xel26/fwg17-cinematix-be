@@ -22,7 +22,7 @@ func UploadFile(c *gin.Context, form string, dest string) (string, error) {
 	cld, _ := cloudinary.NewFromParams(cloudName, cloudAPI, apiSecret)
 
 	var ctx = context.Background()
-	file, _ := c.FormFile("picture") // "picture" => nama field / nama form
+	file, _ := c.FormFile(form) // "picture" => nama field / nama form
 	extensionFile := file.Header["Content-Type"][0]
 
 	ext := map[string]string{
