@@ -66,7 +66,7 @@ func authorizator(data interface{}, c *gin.Context) bool {
 			return true
 		}
 	} else if strings.HasPrefix(c.Request.URL.Path, "/customer") {
-		if userRoleCheck.RoleId == 1 {
+		if userRoleCheck.RoleId == 1 || userRoleCheck.RoleId == 2 {
 			return true
 		}
 	}

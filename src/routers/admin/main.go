@@ -8,6 +8,12 @@ import (
 func AdminRouter(r *gin.RouterGroup) {
 	authMiddleware, _ := middlewares.Auth()
 	r.Use(authMiddleware.MiddlewareFunc())
+  
 	SalesChartRouter(r.Group("/sales-chart"))
 	TicketSalesRouter(r.Group("/ticket-sales"))
+	listmoviesRouter(r.Group("/list-movies"))
+	AddNewMovieRouter(r.Group("/add-new-movie"))
+	RatingRouter(r.Group("/rating"))
+	listmoviesRouter(r.Group("/movies"))
+	AiringTimeRouter(r.Group("/airing-time"))
 }
