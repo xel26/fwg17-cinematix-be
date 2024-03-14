@@ -123,3 +123,18 @@ type CinemaLocation struct {
 	LocationId       pq.StringArray `db:"locationId" json:"LocationId"`
 	Location         pq.StringArray `db:"location" json:"location"`
 }
+
+
+
+
+
+// ------------ ADMIN ------------
+// List movies
+type AdminListMovies struct {
+	Id           int             `db:"id" json:"id"`
+	Image        *string         `db:"image" json:"image"`
+	Title        *string         `db:"title" json:"title"`
+	Genre        *pq.StringArray `db:"genre" json:"genre"`
+	ReleaseDate  *time.Time      `db:"releaseDate" json:"releaseDate"`
+	Duration     *string         `db:"duration" json:"duration"`
+}
