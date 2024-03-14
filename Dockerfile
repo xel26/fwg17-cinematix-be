@@ -4,6 +4,7 @@ WORKDIR /cinematix
 
 COPY . .
 
+RUN cat > .env
 RUN cp .env.example .env
 RUN go mod tidy
 
