@@ -13,4 +13,5 @@ func AdminRouter(r *gin.RouterGroup) {
 	AddNewMovieRouter(r.Group("/add-new-movie"))
 	RatingRouter(r.Group("/rating"))
 	listmoviesRouter(r.Group("/movies"))
+	AiringTimeRouter(r.Group("/airing-time"))
 }

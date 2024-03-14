@@ -27,3 +27,14 @@ func FindByTime(time string) (AiringTime, error){
 
 	return data, err
 }
+
+func FindAllAiringTime() ([]AiringTime, error){
+	sql := `SELECT * FROM "airingTime"`
+	data := []AiringTime{}
+
+	err := db.Select(&data, sql)
+	if err != nil {
+		return data, err
+	}
+	return data, err
+}
