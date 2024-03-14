@@ -69,7 +69,7 @@ func CountAllMovies(filter string) (int, error) {
 	FROM "movies" "m"
 	INNER JOIN "genreMovies" "gm" ON "gm"."moviesId"="m"."id"
 	INNER JOIN "genre" "g" ON "g"."id"="gm"."genreId"
-	WHERE TRIM(UPPER(to_char("m"."createdAt",'Month'))) = UPPER($1))
+	WHERE TRIM(UPPER(to_char("m"."createdAt",'Month'))) = UPPER($1) AND ("m"."statusId" = 1 OR "m"."statusId" = 2))
 	`
 	err := lib.DbConnection().Get(&count, sql, fmtsearch)
 	return count, err
@@ -104,7 +104,7 @@ func InsertMovie(data services.AddNewMovie) (Movie, error) {
 func DeleteMovies(id int) (services.AdminDeleteMovies, error) {
 	sql := `
 	UPDATE "movies" 
-	SET "statusId"=3
+	SET "statusId"=4
 	WHERE "id"=$1
 	RETURNING *
     `
