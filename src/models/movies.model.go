@@ -26,8 +26,8 @@ func FindAllMovies(search string, filter string, orderBy string, limit int, offs
 	"m"."casts" AS "casts",
 	"m"."duration" AS "duration",
 	"m"."releaseDate" AS "releaseDate",
-	"m"."synopsis" AS "synopsis",
-	"m"."isRecommended" AS "isRecommended",
+	"m"."sinopsis" AS "sinopsis",
+	"m"."isRecomended" AS "isRecomended",
 	"m"."createdAt" AS "createdAt",
 	"m"."updatedAt" AS "updatedAt"
 	FROM "movies" AS "m"
@@ -53,8 +53,8 @@ func FindAllMovies(search string, filter string, orderBy string, limit int, offs
 		"m"."casts" AS "casts",
 		"m"."duration" AS "duration",
 		"m"."releaseDate" AS "releaseDate",
-		"m"."synopsis" AS "synopsis",
-		"m"."isRecommended" AS "isRecommended",
+		"m"."sinopsis" AS "sinopsis",
+		"m"."isRecomended" AS "isRecomended",
 		"m"."createdAt" AS "createdAt",
 		"m"."updatedAt" AS "updatedAt"
 		FROM "movies" AS "m"
@@ -90,8 +90,8 @@ func FindOneMovies(id int) (services.Movies, error) {
 	"m"."casts" AS "casts",
 	"m"."duration" AS "duration",
 	"m"."releaseDate" AS "releaseDate",
-	"m"."synopsis" AS "synopsis",
-	"m"."isRecommended" AS "isRecommended",
+	"m"."sinopsis" AS "sinopsis",
+	"m"."isRecomended" AS "isRecomended",
 	"m"."createdAt" AS "createdAt",
 	"m"."updatedAt" AS "updatedAt"
 	FROM "movies" AS "m"
