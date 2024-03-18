@@ -26,5 +26,5 @@ func main() {
 	routers.Combine(r)
 	r.NoRoute(noLink)
 	// r.Run("127.0.0.1:9090") // for local
-	r.Run(":9090") // for production
+	r.Run("127.0.0.1:9090") // for production
 }

@@ -12,10 +12,10 @@ import (
 )
 
 // mengambil date berdasarkan movieCinemaId melalui table moviesTime
-func GetMovieTime(c *gin.Context) {
+func GetDate(c *gin.Context) {
 	movieCinemaId, _ := strconv.Atoi(c.Query("movieCinemaId"))
 
-	result, err := models.GetMovieTime(movieCinemaId)
+	result, err := models.GetDate(movieCinemaId)
 	if err != nil {
 		msg := err.Error()
 		helpers.Utils(err, msg, c)
@@ -23,14 +23,14 @@ func GetMovieTime(c *gin.Context) {
 	}
 
 	if len(result) == 0 {
-		msg := fmt.Sprintf("movieTime with cinemaId %v not found", movieCinemaId)
+		msg := fmt.Sprintf("data date with movieCinemaId %v not found", movieCinemaId)
 		helpers.Utils(err, msg, c)
 		return
 	}
 
 	c.JSON(http.StatusOK, &services.Response{
 		Success: true,
-		Message: "Get movieTime successfully",
+		Message: "Get date successfully",
 		Results: result,
 	})
 }
@@ -39,10 +39,10 @@ func GetMovieTime(c *gin.Context) {
 
 
 // mengambil airing time berdasarkan dateId melalui table airingTimeDateId
-func GetAiringTimeDate(c *gin.Context) {
+func GetAiringTime(c *gin.Context) {
 	dateId, _ := strconv.Atoi(c.Query("dateId"))
 
-	result, err := models.GetAiringTimeDate(c, dateId)
+	result, err := models.GetAiringTime(c, dateId)
 	if err != nil {
 		msg := err.Error()
 		helpers.Utils(err, msg, c)
@@ -50,14 +50,14 @@ func GetAiringTimeDate(c *gin.Context) {
 	}
 
 	if len(result) == 0 {
-		msg := fmt.Sprintf("AiringTimeDate with dateId %v not found", dateId)
+		msg := fmt.Sprintf("data airing time with dateId %v not found", dateId)
 		helpers.Utils(err, msg, c)
 		return
 	}
 
 	c.JSON(http.StatusOK, &services.Response{
 		Success: true,
-		Message: "Get airingTimeDate successfully",
+		Message: "Get airing time successfully",
 		Results: result,
 	})
 }

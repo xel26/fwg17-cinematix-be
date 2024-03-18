@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
 )
 
 type PaymentMethod struct {
@@ -14,12 +16,40 @@ type PaymentMethod struct {
 }
 
 
-func FindAllPaymentMethod() ([]PaymentMethod, error){
-	sql := `SELECT * from "paymentMethod"`
-	data := []PaymentMethod{}
-	err := db.Select(&data, sql)
 
-	return data, err
+
+func FindAllPaymentMethod(search string, limit int, offset int, orderBy string, orderMethod string) (services.Info, error){
+	sql := `
+	SELECT
+	"id",
+	"name",
+	"image",
+	"accountNumber"
+	FROM "paymentMethod"
+	WHERE "name" ILIKE '%` + search + `%'
+	ORDER BY "` + orderBy + `" ` + orderMethod + `
+	LIMIT $1 OFFSET $2
+	`
+
+	sqlCount := `
+	SELECT COUNT(*)
+	FROM "paymentMethod"
+	WHERE "name" ILIKE '%` + search + `%'
+	`
+
+	result := services.Info{}
+
+	data := []PaymentMethod{}
+	err := db.Select(&data, sql, limit, offset)
+	if err != nil {
+		return result, err
+	}
+	result.Data = data
+
+	row := db.QueryRow(sqlCount)
+	err = row.Scan(&result.Count)
+
+	return result, err
 }
 
 

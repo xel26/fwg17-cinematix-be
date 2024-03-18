@@ -114,10 +114,10 @@ func CreateOrder(c *gin.Context) {
 
 
 
-func GetMovieTime(c *gin.Context){
+func GetDate(c *gin.Context){
 	movieCinemaId, _ := strconv.Atoi(c.Query("movieCinemaId"))
 
-	result, err := models.GetMovieTime(movieCinemaId)
+	result, err := models.GetDate(movieCinemaId)
 	if err != nil{
 		msg := err.Error()
 		helpers.Utils(err, msg, c)
