@@ -19,7 +19,7 @@ func noLink(c *gin.Context) {
 func main() {
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost:5173", "astonishing-cheesecake-81f941.netlify.app", "http://cinematix.pasukanhosting.my.id"},
+		AllowOrigins: []string{"http://localhost:5173", "https://astonishing-cheesecake-81f941.netlify.app", "http://cinematix.pasukanhosting.my.id"},
 		AllowMethods: []string{"GET", "POST", "PATCH", "DELETE"},
 		AllowHeaders: []string{"Authorization"},
 	}))
