@@ -6,8 +6,8 @@ import (
 )
 
 func DateTimeRouter(r *gin.RouterGroup){
-	r.GET("movie-time", globalControllers.GetMovieTime)
-	r.GET("airing-time-date", globalControllers.GetAiringTimeDate)
+	r.GET("movie-time", globalControllers.GetDate)
+	r.GET("airing-time-date", globalControllers.GetAiringTime)
 	r.GET("movie-time-id", globalControllers.GetMovieTimeId)
 	r.GET("airing-time-date-id", globalControllers.GetAiringTimeDateId)
 }
