@@ -22,7 +22,7 @@ type GetId struct {
 
 
 // mengambil date berdasarkan movieCinemaId melalui table moviesTime
-func GetMovieTime(movieCinemaId int) ([]MovieTime, error) {
+func GetDate(movieCinemaId int) ([]MovieTime, error) {
 	sql := `
 	SELECT
 	"mt"."id",
@@ -49,8 +49,8 @@ func GetMovieTime(movieCinemaId int) ([]MovieTime, error) {
 }
 
 
-// mengambil airing time berdasarkan dateId dari table melalui table airingTimeDateId
-func GetAiringTimeDate(c *gin.Context, dateId int) ([]AiringTimeDate, error) {
+// mengambil airing time berdasarkan dateId melalui table airingTimeDate
+func GetAiringTime(c *gin.Context, dateId int) ([]AiringTimeDate, error) {
 	sql := `
 	SELECT
 	"atd"."id" AS "airingTimeDateId",

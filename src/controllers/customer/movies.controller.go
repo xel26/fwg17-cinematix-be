@@ -34,10 +34,12 @@ func ListAllMovies(c *gin.Context) {
 
 	totalPage := int(math.Ceil(float64(result.Count) / float64(limit)))
 	nextPage := page + 1
-	if !(nextPage <= int(totalPage)) {
+  
+    if !(nextPage <= int(totalPage)) {
 		nextPage = int(0)
 	}
-	prevPage := page - 1
+    prevPage := page - 1
+
 
 	pageInfo := &services.PageInfo{
 		CurrentPage: page,
