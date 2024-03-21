@@ -1,6 +1,7 @@
 package customerControllers
 
 import (
+	"fmt"
 	"math"
 	"net/http"
 	"strconv"
@@ -19,20 +20,31 @@ func ListAllMovies(c *gin.Context) {
 	filter := c.DefaultQuery("filter", "")
 	orderBy := c.DefaultQuery("orderBy", "id")
 
+	fmt.Println(search)
+
+	for i := 0; i < len(search); i++ {
+		if search[i] == '\'' {
+			search = search[:i+1] + "'" + search[i+1:]
+			i++
+		}
+	}
+
 	offset := (page - 1) * limit
 	result, err := models.FindAllMovies(search, filter, orderBy, limit, offset, status)
 
 	totalPage := int(math.Ceil(float64(result.Count) / float64(limit)))
 	nextPage := page + 1
+  
     if !(nextPage <= int(totalPage)) {
 		nextPage = int(0)
 	}
     prevPage := page - 1
 
+
 	pageInfo := &services.PageInfo{
 		CurrentPage: page,
 		NextPage:    nextPage,
-        PrevPage:    prevPage,
+		PrevPage:    prevPage,
 		Limit:       limit,
 		TotalPage:   totalPage,
 		TotalData:   result.Count,
