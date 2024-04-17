@@ -31,11 +31,11 @@ func GetHistoryOrder(c *gin.Context) {
 		return
 	}
 
-	// if len(result.Data.([]models.HistoryOrder)) == 0 {		// => type asertion
-	// 	msg := "no data found"
-	// 	helpers.Utils(err, msg, c)
-	// 	return
-	// }
+	if len(result.Data.([]models.HistoryOrder)) == 0 {		// => type asertion
+		msg := "no data found"
+		helpers.Utils(err, msg, c)
+		return
+	}
 
 
 	

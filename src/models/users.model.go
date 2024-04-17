@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	"github.com/jmoiron/sqlx"
 	"github.com/putragabrielll/fwg17-cinematix-be/src/lib"
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
@@ -22,6 +24,7 @@ func UpdateUsers(data services.Person) (services.PersonNet, error){ // bisa teru
 	UPDATE "users" SET 
 	"firstName"=COALESCE(NULLIF(:firstName,''),"firstName"),
 	"lastName"=COALESCE(NULLIF(:lastName,''),"lastName"),
+	"email"=COALESCE(NULLIF(:email,''),"email"),
 	"phoneNumber"=COALESCE(NULLIF(:phoneNumber,''),"phoneNumber"),
 	"picture"=COALESCE(NULLIF(:picture,''),"picture"),
 	"password"=COALESCE(NULLIF(:password,''),"password"),
@@ -53,19 +56,21 @@ func FindUsersByEmail(email string) (services.PersonNet, error) {
 func RegisterUsers(data services.RLUsers) (services.PersonNet, error) {
 	sql := `
 	INSERT INTO "users"
-    ("email", "password")
+    ("email", "password", "roleId")
     VALUES
-    (:email, :password)
+    (:email, :password, :roleId)
     RETURNING *
     `
 	returning := services.PersonNet{}
 	rows, err := db.NamedQuery(sql, data)
 	if err != nil {
+		fmt.Println(err.Error())
 		return returning, err
 	}
 
 	for rows.Next() { // rows.Next() => akan mengembalikan boolean.
 		rows.StructScan(&returning)
 	}
+
 	return returning, err
 }

@@ -16,7 +16,7 @@ func Register(c *gin.Context) {
 	usersData := services.RLUsers{}
 	err := c.ShouldBind(&usersData) // untuk memasukkan data dari form ke struck Person{}
 	if err != nil {
-		msg := "Invalid Email"
+		msg := err.Error()
 		helpers.Utils(err, msg, c) // Error Handle
 		return
 	}
@@ -25,6 +25,7 @@ func Register(c *gin.Context) {
 	hasedPasswd, _ := argonize.Hash(paswdhash)
 
 	usersData.Password = hasedPasswd.String()
+	usersData.RoleId = 1
 
 	createUser, err := models.RegisterUsers(usersData)
 	// fmt.Println(err)

@@ -20,7 +20,7 @@ type Movie struct {
 	Casts    string `db:"casts" json:"casts" form:"casts"`
 	Duration string `db:"duration" json:"duration" form:"duration"`
 	ReleaseDate time.Time `db:"releaseDate" json:"releaseDate" form:"releaseDate"`
-	Sinopsis string `db:"sinopsis" json:"sinopsis" form:"sinopsis"`
+	Synopsis string `db:"synopsis" json:"synopsis" form:"synopsis"`
 	IsRecomended bool `db:"isRecomended" json:"isRecomended" form:"isRecomended"`
 	CreatedAt time.Time `db:"createdAt" json:"createdAt"`
 	UpdatedAt sql.NullTime `db:"updatedAt" json:"updatedAt"`
@@ -48,14 +48,14 @@ func ListAllMovies(search string, limit int, offset int) ([]services.AdminListMo
 	FROM "movies" "m"
 	INNER JOIN "genreMovies" "gm" ON "gm"."moviesId"="m"."id"
 	INNER JOIN "genre" "g" ON "g"."id"="gm"."genreId"
-	WHERE TRIM(UPPER(to_char("m"."createdAt",'Month'))) = UPPER($1) AND ("m"."statusId" = 1 OR "m"."statusId" = 2)
+	WHERE TRIM(UPPER(to_char("m"."createdAt",'Month'))) LIKE UPPER($1) AND ("m"."statusId" = 1 OR "m"."statusId" = 2)
 	GROUP BY "m"."id","m"."image","m"."title", "m"."releaseDate","m"."duration"
 	ORDER BY "m"."id" DESC
 	LIMIT $2
 	OFFSET $3
 	`
 	data := []services.AdminListMovies{}
-	err := lib.DbConnection().Select(&data, sql, fmtsearch, limit, offset)
+	err := lib.DbConnection().Select(&data, sql, "%"+fmtsearch+"%", limit, offset)
 	return data, err
 }
 
@@ -69,9 +69,9 @@ func CountAllMovies(filter string) (int, error) {
 	FROM "movies" "m"
 	INNER JOIN "genreMovies" "gm" ON "gm"."moviesId"="m"."id"
 	INNER JOIN "genre" "g" ON "g"."id"="gm"."genreId"
-	WHERE TRIM(UPPER(to_char("m"."createdAt",'Month'))) = UPPER($1) AND ("m"."statusId" = 1 OR "m"."statusId" = 2))
-	`
-	err := lib.DbConnection().Get(&count, sql, fmtsearch)
+	WHERE TRIM(UPPER(to_char("m"."createdAt",'Month'))) LIKE UPPER($1) AND ("m"."statusId" = 1 OR "m"."statusId" = 2)
+	) AS "count"`
+	err := lib.DbConnection().Get(&count, sql, "%"+fmtsearch+"%")
 	return count, err
 }
 
@@ -79,9 +79,9 @@ func CountAllMovies(filter string) (int, error) {
 func InsertMovie(data services.AddNewMovie) (Movie, error) {
 	sql := `
 	INSERT INTO "movies"
-	("statusId", "ratingId", "title", "image", "director", "casts", "duration", "releaseDate", "sinopsis", "isRecomended")
+	("statusId", "ratingId", "title", "image", "director", "casts", "duration", "releaseDate", "synopsis", "isRecomended")
 	VALUES
-	(:statusId, :ratingId, :title, :image, :director, :casts, :duration, :releaseDate, :sinopsis, :isRecomended)
+	(:statusId, :ratingId, :title, :image, :director, :casts, :duration, :releaseDate, :synopsis, :isRecomended)
 	RETURNING *
 	`
 	result := Movie{}

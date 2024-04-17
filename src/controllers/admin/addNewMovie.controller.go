@@ -13,6 +13,16 @@ import (
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
 )
 
+func Includes(slice []int, value int)bool{
+	for _, v := range slice{
+		if v == value{
+			return true
+		}
+	}
+
+	return false
+}
+
 func AddNewMovie(c *gin.Context) {
 
 	// ambil data dari form
@@ -36,7 +46,7 @@ func AddNewMovie(c *gin.Context) {
 			helpers.Utils(err, msg, c)
 			return
 		}
-		fmt.Println(image)
+		// fmt.Println(image)
 		dataMovie.Image = image
 	}
 
@@ -76,6 +86,8 @@ func AddNewMovie(c *gin.Context) {
 		sliceGenreId = append(sliceGenreId, genre.Id)
 	}
 
+	// fmt.Println(sliceGenre, sliceGenreId)
+
 
 
 	// cek apakah lokasi tersedia
@@ -96,6 +108,8 @@ func AddNewMovie(c *gin.Context) {
 
 		sliceLocationId = append(sliceLocationId, location.Id)
 	}
+
+	// fmt.Println(sliceLocation, sliceLocationId)
 	
 
 
@@ -118,9 +132,14 @@ func AddNewMovie(c *gin.Context) {
 
 
 		for _, data := range listCinema {
-			sliceCinemaId = append(sliceCinemaId, data.CinemaId)
+			result := Includes(sliceCinemaId, data.CinemaId)
+			if !result{
+				sliceCinemaId = append(sliceCinemaId, data.CinemaId)
+			}
 		}
 	}
+
+	// fmt.Println("sliceCinemaId", sliceCinemaId)
 
 
 
@@ -151,7 +170,7 @@ func AddNewMovie(c *gin.Context) {
 		dateId = findDate.Id
 	}
 
-	fmt.Println("date", dateId, dataMovie.Date)
+	// fmt.Println("date", dateId, dataMovie.Date)
 
 
 
@@ -174,7 +193,7 @@ func AddNewMovie(c *gin.Context) {
 
 		sliceAiringTimeId = append(sliceAiringTimeId, airingTime.Id)
 	}
-	fmt.Println("airingTime", dataMovie.AiringTime, sliceAiringTime, sliceAiringTimeId)
+	// fmt.Println("airingTime", dataMovie.AiringTime, sliceAiringTime, sliceAiringTimeId)
 
 
 
@@ -204,7 +223,7 @@ func AddNewMovie(c *gin.Context) {
 			airingTimeDateId = append(airingTimeDateId, findAiringTimeDate.Id)
 		}
 	}
-	fmt.Println("airingTimeDateId", airingTimeDateId)
+	// fmt.Println("airingTimeDateId", airingTimeDateId)
 
 
 
@@ -226,12 +245,12 @@ func AddNewMovie(c *gin.Context) {
 
 
 
-	// set default isRecomended true
-	dataMovie.IsRecomended = true
+	// set default isRecommended true
+	dataMovie.IsRecommended = true
 
 
 
-	// insert ke table movies
+	//insert ke table movies
 	movie, err := adminModels.InsertMovie(dataMovie)
 	if err != nil {
 		msg := err.Error()
@@ -241,7 +260,7 @@ func AddNewMovie(c *gin.Context) {
 
 
 
-	// insert ke table genreMovies
+	//insert ke table genreMovies
 	for i := 0; i < len(sliceGenreId); i++ {
 		data := adminModels.GenreMovies{
 			GenreId: sliceGenreId[i],
@@ -259,7 +278,7 @@ func AddNewMovie(c *gin.Context) {
 
 
 
-	// Insert ke table movieCinema
+	//Insert ke table movieCinema
 	movieCinemaId := []int{}
 
 	for i := 0; i < len(sliceCinemaId); i++ {
@@ -276,12 +295,12 @@ func AddNewMovie(c *gin.Context) {
 
 		movieCinemaId = append(movieCinemaId, movieCinema.Id)
 	}
-	fmt.Println("movieCinemaId", movieCinemaId)
+	// fmt.Println("movieCinemaId", movieCinemaId)
 
 
 
 
-	// insert ke table moviesTime
+	//insert ke table moviesTime
 	moviesTimeId := []int{}
 
 	for i := 0; i < len(movieCinemaId); i++ {

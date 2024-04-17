@@ -5,40 +5,36 @@ import (
 )
 
 type MovieTime struct {
-	Id             int    `db:"id" json:"movieTimeId"`
-	AiringTimeDate string `db:"airingTimeDate" json:"airingTimeDate"`
+	Date           string `db:"date" json:"date"`
 }
 
+// type MovieTime struct {
+// 	Date           pq.StringArray `db:"date" json:"date"`
+// }
+
 type AiringTimeDate struct {
-	AiringTimeDateId int    `db:"airingTimeDateId" json:"airingTimeDateId"`
 	AiringTimeId     int    `db:"airingTimeId" json:"airingTimeId"`
 	AiringTime       string `db:"time" json:"airingTime"`
 }
-
 
 type GetId struct {
 	Id int `db:"id" json:"id"`
 }
 
-
 // mengambil date berdasarkan movieCinemaId melalui table moviesTime
 func GetDate(movieCinemaId int) ([]MovieTime, error) {
 	sql := `
 	SELECT
-	"mt"."id",
-	JSONB_AGG(
-        DISTINCT JSONB_BUILD_OBJECT(
-            'airingTimeDateId', "atd"."id",
-			'dateId', "d"."id",
-			'date', "d"."date"
-        )
-    ) AS "airingTimeDate"
+	DISTINCT JSONB_BUILD_OBJECT(
+		'dateId', "d"."id",
+		'date', "d"."date"
+	) AS "date"
 	FROM "moviesTime" "mt"
 	JOIN "airingTimeDate" "atd" ON ("atd"."id" = "mt"."airingTimeDateId")
 	JOIN "date" "d" ON ("d"."id" = "atd"."dateId")
 	WHERE "mt"."movieCinemaId" = $1
-	GROUP BY "mt"."id"
 	`
+
 	data := []MovieTime{}
 	err := db.Select(&data, sql, movieCinemaId)
 	if err != nil {
@@ -48,29 +44,28 @@ func GetDate(movieCinemaId int) ([]MovieTime, error) {
 	return data, err
 }
 
-
 // mengambil airing time berdasarkan dateId melalui table airingTimeDate
-func GetAiringTime(c *gin.Context, dateId int) ([]AiringTimeDate, error) {
+func GetAiringTime(c *gin.Context, movieId int) ([]AiringTimeDate, error) {
 	sql := `
 	SELECT
-	"atd"."id" AS "airingTimeDateId",
 	"at"."id" AS "airingTimeId",
 	"at"."time"
 	FROM "airingTimeDate" "atd"
-	JOIN "airingTime" "at" ON ("at"."id" = "atd"."airingTimeId")
-	JOIN "date" "d" ON ("d"."id" = "atd"."dateId")
-	WHERE "d"."id" = $1
+	LEFT JOIN "airingTime" "at" ON ("at"."id" = "atd"."airingTimeId")
+	LEFT JOIN "moviesTime" "mv" ON ("mv"."airingTimeDateId" = "atd"."id")
+	LEFT JOIN "movieCinema" "mc" ON ("mc"."id" = "mv"."movieCinemaId")
+	LEFT JOIN "movies" "m" ON ("m"."id" = "mc"."moviesId")
+	WHERE "m"."id" = $1
+	GROUP BY "at"."id"
 	`
 	data := []AiringTimeDate{}
-	err := db.Select(&data, sql, dateId)
+	err := db.Select(&data, sql, movieId)
 	if err != nil {
 		return data, err
 	}
 
 	return data, err
 }
-
-
 
 // mengambil id movieTime berdasarkan airingTimeDateId dan movieCinemaId
 func GetMovieTimeId(c *gin.Context, airingTimeDateId int, movieCinemaId int) (GetId, error) {
@@ -87,8 +82,6 @@ func GetMovieTimeId(c *gin.Context, airingTimeDateId int, movieCinemaId int) (Ge
 
 	return data, err
 }
-
-
 
 // mengambil id airingTimeDate berdasarkan airingTimeId dan dateId
 func GetAiringTimeDateId(c *gin.Context, airingTimeId int, dateId int) (GetId, error) {
