@@ -16,7 +16,7 @@ func GetMovieCinemaId(c *gin.Context) {
 	movieCinemaId, err := models.FindMovieCinemaByMovieId(movieId)
 	// fmt.Println(err)
 	if err != nil {
-		msg := "No Data Match"
+		msg := err.Error()
 		helpers.Utils(err, msg, c)
 		return
 	}

@@ -22,7 +22,7 @@ func UploadFile(c *gin.Context, form string, dest string) (string, error) {
 	cld, _ := cloudinary.NewFromParams(cloudName, cloudAPI, apiSecret)
 
 	var ctx = context.Background()
-	file, _ := c.FormFile(form)		// => agar dinamis sehingga fungsi upload dapat di gunakan di table lain dengan nama field yg berbeda, misal "image"
+	file, _ := c.FormFile(form)
 	extensionFile := file.Header["Content-Type"][0]
 
 	ext := map[string]string{
@@ -43,7 +43,7 @@ func UploadFile(c *gin.Context, form string, dest string) (string, error) {
 		return "", errors.New("Extension not support!")
 	}
 	if file.Size > (2 * 1024 * 1024) {
-		return "", errors.New(("File to over size, Max file upload 2MB!"))
+		return "", errors.New(("File too large. Maximum size is 2MB!"))
 	}
 	// END VALIDATION
 

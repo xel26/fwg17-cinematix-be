@@ -56,7 +56,7 @@ type Info struct {
 type Person struct {
 	Id          int        `db:"id" json:"id"`
 	RoleId      int        `db:"roleId" json:"roleId"`
-	Email       string     `db:"email" json:"email"`
+	Email       string     `db:"email" json:"email" form:"email"`
 	FirstName   *string    `db:"firstName" json:"firstName" form:"firstName"`
 	LastName    *string    `db:"lastName" json:"lastName" form:"lastName"`
 	PhoneNumber *string    `db:"phoneNumber" json:"phoneNumber" form:"phoneNumber"`
@@ -84,36 +84,42 @@ type PersonNet struct { // untuk struck respon saja dimana data yg tidak di isi 
 type RLUsers struct {
 	Email    string `db:"email" json:"email" form:"email" binding:"email,required"`
 	Password string `db:"password" json:"password" form:"password" binding:"required"`
+	RoleId   int    `db:"roleId" json:"roleId"`
 }
 
 // MOVIES
 
 type Movies struct {
-	Id           int             `db:"id" json:"id"`
-	Status       *string         `db:"status" json:"status" form:"status"`
-	Rating       *string         `db:"rating" json:"rating" form:"rating"`
-	Title        *string         `db:"title" json:"title" form:"title"`
-	Image        *string         `db:"image" json:"image" form:"image"`
-	Genre        *pq.StringArray `db:"genre" json:"genre" form:"genre"`
-	Director     *string         `db:"director" json:"director" form:"director"`
-	Casts        *string         `db:"casts" json:"casts" form:"casts"`
-	Duration     *string         `db:"duration" json:"duration" form:"duration"`
-	ReleaseDate  *time.Time      `db:"releaseDate" json:"releaseDate" form:"releaseDate"`
-	Sinopsis     *string         `db:"sinopsis" json:"sinopsis" form:"sinopsis"`
-	IsRecomended *bool           `db:"isRecomended" json:"isRecomended" form:"isRecomended"`
-	CreatedAt    *time.Time      `db:"createdAt" json:"createdAt" form:"createdAt"`
-	UpdatedAt    *time.Time      `db:"updatedAt" json:"updatedAt" form:"updatedAt"`
+	Id            int             `db:"id" json:"id"`
+	Status        *string         `db:"status" json:"status" form:"status"`
+	Rating        *string         `db:"rating" json:"rating" form:"rating"`
+	Title         *string         `db:"title" json:"title" form:"title"`
+	Image         *string         `db:"image" json:"image" form:"image"`
+	Genre         *pq.StringArray `db:"genre" json:"genre" form:"genre"`
+	Director      *string         `db:"director" json:"director" form:"director"`
+	Casts         *string         `db:"casts" json:"casts" form:"casts"`
+	Duration      *string         `db:"duration" json:"duration" form:"duration"`
+	ReleaseDate   *time.Time      `db:"releaseDate" json:"releaseDate" form:"releaseDate"`
+	Synopsis      *string         `db:"synopsis" json:"synopsis" form:"synopsis"`
+	IsRecommended *bool           `db:"isRecommended" json:"isRecommended" form:"isRecommended"`
+	CreatedAt     *time.Time      `db:"createdAt" json:"createdAt" form:"createdAt"`
+	UpdatedAt     *time.Time      `db:"updatedAt" json:"updatedAt" form:"updatedAt"`
 }
 
 // MOVIE CINEMA
 
+// type MovieCinema struct {
+// 	MovieId       int             `db:"movieId" json:"movieId"`
+// 	CinemaId      *pq.Int64Array  `db:"cinemaId" json:"cinemaId" form:"cinemaId"`
+// 	CinemaName    *pq.StringArray `db:"cinemaName" json:"cinemaName"`
+// 	CinemaPrice   *pq.Int64Array  `db:"cinemaPrice" json:"cinemaPrice"`
+// 	MovieCinemaId *pq.Int64Array  `db:"movieCinemaId" json:"movieCinemaId" form:"movieCinemaId"`
+// 	CinemaImage   *pq.StringArray `db:"cinemaImage" json:"cinemaImage" form:"cinemaImage"`
+// }
+
 type MovieCinema struct {
 	MovieId       int             `db:"movieId" json:"movieId"`
-	CinemaId      *pq.Int64Array  `db:"cinemaId" json:"cinemaId" form:"cinemaId"`
-	CinemaName    *pq.StringArray `db:"cinemaName" json:"cinemaName"`
-	CinemaPrice   *pq.Int64Array  `db:"cinemaPrice" json:"cinemaPrice"`
-	MovieCinemaId *pq.Int64Array  `db:"movieCinemaId" json:"movieCinemaId" form:"movieCinemaId"`
-	CinemaImage   *pq.StringArray `db:"cinemaImage" json:"cinemaImage" form:"cinemaImage"`
+	Cinema      string  `db:"cinema" json:"cinema" form:"cinema"`
 }
 
 // CINEMA LOCATION
@@ -124,21 +130,16 @@ type CinemaLocation struct {
 	Location         pq.StringArray `db:"location" json:"location"`
 }
 
-
-
-
-
 // ------------ ADMIN ------------
 // List movies
 type AdminListMovies struct {
-	Id           int             `db:"id" json:"id"`
-	Image        *string         `db:"image" json:"image"`
-	Title        *string         `db:"title" json:"title"`
-	Genre        *pq.StringArray `db:"genre" json:"genre"`
-	ReleaseDate  *time.Time      `db:"releaseDate" json:"releaseDate"`
-	Duration     *string         `db:"duration" json:"duration"`
+	Id          int             `db:"id" json:"id"`
+	Image       *string         `db:"image" json:"image"`
+	Title       *string         `db:"title" json:"title"`
+	Genre       *pq.StringArray `db:"genre" json:"genre"`
+	ReleaseDate *time.Time      `db:"releaseDate" json:"releaseDate"`
+	Duration    *string         `db:"duration" json:"duration"`
 }
-
 
 // ADMIN ADD NEW MOVIE
 type AddNewMovie struct {
@@ -151,8 +152,8 @@ type AddNewMovie struct {
 	Casts        string       `db:"casts" json:"casts" form:"casts"`
 	Duration     string       `db:"duration" json:"duration" form:"duration"`
 	ReleaseDate  string       `db:"releaseDate" json:"releaseDate" form:"releaseDate"`
-	Sinopsis     string       `db:"sinopsis" json:"sinopsis" form:"sinopsis"`
-	IsRecomended bool         `db:"isRecomended" json:"isRecomended"`
+	Synopsis     string       `db:"synopsis" json:"synopsis" form:"synopsis"`
+	IsRecommended bool         `db:"isRecommended" json:"isRecommended"`
 	CreatedAt    time.Time    `db:"createdAt" json:"createdAt"`
 	UpdatedAt    sql.NullTime `db:"updatedAt" json:"updatedAt"`
 	Genre        string       `db:"genre" json:"genre" form:"genre"`
@@ -161,20 +162,19 @@ type AddNewMovie struct {
 	AiringTime   string       `db:"airingTime" json:"airingTime" form:"airingTime"`
 }
 
-
 // Delete movies
 type AdminDeleteMovies struct {
-	Id           int            `db:"id" json:"id"`
-	StatusId     *int         	`db:"statusId" json:"statusId"`
-	RatingId     *int         	`db:"ratingId" json:"ratingId"`
-	Title        *string        `db:"title" json:"title"`
-	Image        *string        `db:"image" json:"image"`
-	Director     *string         `db:"director" json:"director"`
-	Casts        *string         `db:"casts" json:"casts"`
-	Duration     *string         `db:"duration" json:"duration"`
-	ReleaseDate  *time.Time      `db:"releaseDate" json:"releaseDate"`
-	Sinopsis     *string         `db:"sinopsis" json:"sinopsis"`
-	IsRecomended *bool           `db:"isRecomended" json:"isRecomended"`
-	CreatedAt    *time.Time      `db:"createdAt" json:"createdAt"`
-	UpdatedAt    *time.Time      `db:"updatedAt" json:"updatedAt"`
+	Id           int        `db:"id" json:"id"`
+	StatusId     *int       `db:"statusId" json:"statusId"`
+	RatingId     *int       `db:"ratingId" json:"ratingId"`
+	Title        *string    `db:"title" json:"title"`
+	Image        *string    `db:"image" json:"image"`
+	Director     *string    `db:"director" json:"director"`
+	Casts        *string    `db:"casts" json:"casts"`
+	Duration     *string    `db:"duration" json:"duration"`
+	ReleaseDate  *time.Time `db:"releaseDate" json:"releaseDate"`
+	Synopsis     *string    `db:"synopsis" json:"synopsis"`
+	IsRecommended *bool      `db:"isRecommended" json:"isRecommended"`
+	CreatedAt    *time.Time `db:"createdAt" json:"createdAt"`
+	UpdatedAt    *time.Time `db:"updatedAt" json:"updatedAt"`
 }

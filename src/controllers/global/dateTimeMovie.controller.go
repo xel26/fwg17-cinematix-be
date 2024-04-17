@@ -40,9 +40,9 @@ func GetDate(c *gin.Context) {
 
 // mengambil airing time berdasarkan dateId melalui table airingTimeDateId
 func GetAiringTime(c *gin.Context) {
-	dateId, _ := strconv.Atoi(c.Query("dateId"))
+	movieId, _ := strconv.Atoi(c.Query("movieId"))
 
-	result, err := models.GetAiringTime(c, dateId)
+	result, err := models.GetAiringTime(c, movieId)
 	if err != nil {
 		msg := err.Error()
 		helpers.Utils(err, msg, c)
@@ -50,7 +50,7 @@ func GetAiringTime(c *gin.Context) {
 	}
 
 	if len(result) == 0 {
-		msg := fmt.Sprintf("data airing time with dateId %v not found", dateId)
+		msg := "data not found"
 		helpers.Utils(err, msg, c)
 		return
 	}

@@ -7,18 +7,26 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/putragabrielll/fwg17-cinematix-be/src/helpers"
-	"github.com/putragabrielll/fwg17-cinematix-be/src/models/admin"
+	adminModels "github.com/putragabrielll/fwg17-cinematix-be/src/models/admin"
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
 )
 
 func ListMovies(c *gin.Context) {
-	search := c.DefaultQuery("month", "march")
+	// search := c.DefaultQuery("month", "march")
+	search := c.DefaultQuery("month", "")
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "5"))
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "12"))
 	offset := (page - 1) * limit
 
 	countData, _ := adminModels.CountAllMovies(search)
 	page_total := int(math.Ceil(float64(countData) / float64(limit)))
+
+	nextPage := page + 1
+  
+    if !(nextPage <= int(page_total)) {
+		nextPage = int(0)
+	}
+    prevPage := page - 1
 
 	movies, err := adminModels.ListAllMovies(search, limit, offset)
 	if err != nil {
@@ -30,6 +38,8 @@ func ListMovies(c *gin.Context) {
 	pageInfo := &services.PageInfo{
 		CurrentPage: page,
 		Limit:       limit,
+		PrevPage: prevPage,
+		NextPage: nextPage,
 		TotalPage:   page_total,
 		TotalData:   countData,
 	}

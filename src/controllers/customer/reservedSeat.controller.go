@@ -21,11 +21,11 @@ func GetReservedSeat(c *gin.Context) {
 		return
 	}
 
-	// if result[0].SeatCode == "null"{
-	// 	msg := "reserved seat not found"
-	// 	helpers.Utils(nil, msg, c)
-	// 	return
-	// }
+	if result.SeatCode == nil {
+		msg := "reserved seat not found"
+		helpers.Utils(err, msg, c)
+		return
+	}
 
 	// fmt.Println(result)
 	c.JSON(http.StatusOK, &services.Response{
