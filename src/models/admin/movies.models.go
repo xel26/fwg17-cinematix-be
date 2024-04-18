@@ -21,7 +21,7 @@ type Movie struct {
 	Duration string `db:"duration" json:"duration" form:"duration"`
 	ReleaseDate time.Time `db:"releaseDate" json:"releaseDate" form:"releaseDate"`
 	Synopsis string `db:"synopsis" json:"synopsis" form:"synopsis"`
-	IsRecomended bool `db:"isRecomended" json:"isRecomended" form:"isRecomended"`
+	IsRecomended bool `db:"isRecommended" json:"isRecommended" form:"isRecommended"`
 	CreatedAt time.Time `db:"createdAt" json:"createdAt"`
 	UpdatedAt sql.NullTime `db:"updatedAt" json:"updatedAt"`
 }
@@ -79,9 +79,9 @@ func CountAllMovies(filter string) (int, error) {
 func InsertMovie(data services.AddNewMovie) (Movie, error) {
 	sql := `
 	INSERT INTO "movies"
-	("statusId", "ratingId", "title", "image", "director", "casts", "duration", "releaseDate", "synopsis", "isRecomended")
+	("statusId", "ratingId", "title", "image", "director", "casts", "duration", "releaseDate", "synopsis", "isRecommended")
 	VALUES
-	(:statusId, :ratingId, :title, :image, :director, :casts, :duration, :releaseDate, :synopsis, :isRecomended)
+	(:statusId, :ratingId, :title, :image, :director, :casts, :duration, :releaseDate, :synopsis, :isRecommended)
 	RETURNING *
 	`
 	result := Movie{}
