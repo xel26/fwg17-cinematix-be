@@ -10,12 +10,12 @@ import (
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/joho/godotenv"
 	"github.com/pkg/errors"
 )
 
 func UploadFile(c *gin.Context, form string, dest string) (string, error) {
-	godotenv.Load()
+	// godotenv.Load()
+
 	cloudName := os.Getenv("CLOUDINARY_CLOUD_NAME")
 	cloudAPI := os.Getenv("CLOUDINARY_API_KEY")
 	apiSecret := os.Getenv("CLOUDINARY_API_SECRET")

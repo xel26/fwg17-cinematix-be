@@ -9,7 +9,6 @@ import (
 	"github.com/KEINOS/go-argonize"
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"github.com/pkg/errors"
 	"github.com/putragabrielll/fwg17-cinematix-be/src/models"
 	"github.com/putragabrielll/fwg17-cinematix-be/src/services"
@@ -95,7 +94,8 @@ func loginresp(c *gin.Context, code int, token string, time time.Time) {
 
 
 func Auth() (*jwt.GinJWTMiddleware, error) {
-	godotenv.Load()
+	// godotenv.Load()
+
 	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
 		Realm:           "cinematix-be",
 		Key:             []byte(os.Getenv("APP_SECRET")),

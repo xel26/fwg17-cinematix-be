@@ -1,11 +1,10 @@
-FROM golang
+FROM golang:latest
 
-WORKDIR /cinematix
-
+WORKDIR /app
 COPY . .
 
-RUN cat > .env
-RUN cp .env.example .env
+# RUN cat > .env
+# RUN cp .env.example .env
 RUN go mod tidy
 
 EXPOSE 9090
